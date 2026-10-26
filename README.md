@@ -71,9 +71,10 @@ flutter build apk --release
 ```
 
 Android release builds enable Java core-library desugaring for local notifications and
-apply R8 keep rules for optional ML Kit scripts that are not bundled. Kotlin
-incremental caching is disabled in `android/gradle.properties` so Windows checkouts
-with the Pub cache on a different drive build reliably.
+apply R8 keep rules for optional ML Kit scripts that are not bundled, plus the ML Kit
+component registrars that are discovered and instantiated reflectively at startup.
+Kotlin incremental caching is disabled in `android/gradle.properties` so Windows
+checkouts with the Pub cache on a different drive build reliably.
 
 ---
 
@@ -178,7 +179,9 @@ outbox, so reports also work offline after generation.
 
 ### Device integration
 
-- **Android OCR**: Google ML Kit text recognition on a captured/gallery image.
+- **Android OCR**: Google ML Kit text recognition on a captured/gallery image,
+  with layout-aware line reconstruction so two-column receipts keep their
+  label/amount pairs.
 - **Web OCR**: manual paste fallback, because ML Kit is native-only.
 - **Biometrics**: `local_auth` gate on resume when enabled in settings.
 - **Notifications**: budget threshold, unusual-spend, and recurring reminders via

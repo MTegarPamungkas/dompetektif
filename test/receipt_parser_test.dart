@@ -33,6 +33,59 @@ Terima kasih
       },
     );
 
+    test('reads a two-column receipt with labels and amounts lined up', () {
+      // This is the reading order produced by reconstructOcrLayout for a photo
+      // whose columns ML Kit recognized as separate blocks.
+      const raw = '''
+KOPI SENJA
+Jl. Contoh No. 123, Jakarta
+Telp: 0812-3456-7890
+NPWP:
+01.234.567.8-901.000
+Tanggal : 15/10/2026 19:42
+Kasir : Andi
+No. Nota: 20261015-0042
+Kopi Susu  1 x 25.000  25.000
+Roti Bakar  1 x 20.000  20.000
+Air Mineral  1 x 8.000  8.000
+Subtotal  53.000
+Pajak 10%  5.300
+Total Bayar  58.300
+Tunai  60.000
+Kembali  1.700
+Terima kasih atas kunjungan Anda
+''';
+
+      final parsed = parser.parse(raw);
+
+      expect(parsed.merchant, 'Kopi Senja');
+      expect(parsed.total?.amountMinor, 58300);
+      expect(parsed.occurredAt, DateTime(2026, 10, 15));
+      expect(parsed.items.map((item) => item.name), [
+        'Kopi Susu',
+        'Roti Bakar',
+        'Air Mineral',
+      ]);
+    });
+
+    test('never treats phone, NPWP, or nota numbers as money', () {
+      const raw = '''
+TOKO MAKMUR
+Telp: 0812-3456-7890
+NPWP: 01.234.567.8-901.000
+No. Nota: 20261015-0042
+Total 45.000
+''';
+
+      final parsed = parser.parse(raw);
+
+      expect(parsed.total?.amountMinor, 45000);
+      expect(
+        parsed.items.where((item) => item.name.toLowerCase().contains('telp')),
+        isEmpty,
+      );
+    });
+
     test('prefers an explicit grand total over smaller line amounts', () {
       const raw = '''
 TOKO BANGUNAN JAYA
@@ -109,6 +162,20 @@ GRAND TOTAL                    155.000
       );
 
       expect(category?.id, DefaultCategories.otherExpenseId);
+    });
+
+    test('repeated receipt words beat a single utility keyword', () {
+      // Alphabetical order would otherwise let "Bills" win a tie because
+      // "air" (the water utility keyword) appears in "Air Mineral".
+      final alphabetical = [...categories]
+        ..sort((a, b) => a.name.compareTo(b.name));
+
+      final category = classifier.classify(
+        text: 'Kopi Senja Kopi Susu Roti Bakar Air Mineral',
+        categories: alphabetical,
+      );
+
+      expect(category?.id, DefaultCategories.foodId);
     });
   });
 }

@@ -89,6 +89,27 @@ class ReceiptParser {
     'ppn',
   ];
 
+  /// Lines that carry identity data rather than money. Their long digit runs
+  /// (phone numbers, nota ids, NPWP numbers) must never become totals or items.
+  static const List<String> _metadataWords = [
+    'telp',
+    'telepon',
+    'phone',
+    'npwp',
+    'nota',
+    'invoice',
+    'kasir',
+    'cashier',
+    'tanggal',
+    'date',
+    'alamat',
+    'address',
+    'member',
+    'kode',
+    'ref',
+    'no.',
+  ];
+
   static const Map<String, int> _monthNumbers = {
     'jan': 1,
     'januari': 1,
@@ -194,7 +215,9 @@ class ReceiptParser {
 
       final amounts = RegExp(r'\d[\d.,]*')
           .allMatches(line)
-          .map((match) => _parseAmount(match.group(0)!))
+          .map((match) => match.group(0)!)
+          .where(_looksLikeAmount)
+          .map(_parseAmount)
           .whereType<int>()
           .where((value) => value >= 100)
           .toList();
@@ -213,9 +236,16 @@ class ReceiptParser {
     for (final line in lines) {
       final lower = line.toLowerCase();
       if (_ignoredItemWords.any(lower.contains)) continue;
+      if (_isMetadataLine(lower)) continue;
+      // Amount-only lines are usually the right-hand column of a two-column
+      // receipt. Pairing them needs layout data, so the plain-text fallback
+      // only trusts lines that also carry a label.
+      if (!RegExp(r'[a-zA-Z]').hasMatch(line)) continue;
       final amounts = RegExp(r'\d[\d.,]*')
           .allMatches(line)
-          .map((match) => _parseAmount(match.group(0)!))
+          .map((match) => match.group(0)!)
+          .where(_looksLikeAmount)
+          .map(_parseAmount)
           .whereType<int>()
           .where((value) => value >= 1000 && value <= 100000000)
           .toList();
@@ -270,26 +300,29 @@ class ReceiptParser {
       final lower = line.toLowerCase();
       if (_ignoredItemWords.any(lower.contains)) continue;
       if (lower.contains('total')) continue;
+      if (_isMetadataLine(lower)) continue;
 
       final matches = RegExp(r'\d[\d.,]*').allMatches(line).toList();
       if (matches.isEmpty) continue;
-      final last = matches.last;
-      final amount = _parseAmount(last.group(0)!);
-      if (amount == null || amount < 500) continue;
 
-      final name = line.substring(0, last.start).trim();
-      if (name.length < 2 || RegExp(r'^[^a-zA-Z]+$').hasMatch(name)) continue;
-      if (name.toLowerCase().contains('tanggal')) continue;
+      final amount = _lastAmount(matches);
+      if (amount == null) continue;
+
+      final quantityMatch = RegExp(r'(\d+)\s*[xX×]\s*[\d.,]+').firstMatch(line);
+      final cutoff = quantityMatch?.start ?? matches.first.start;
+
+      var name = line.substring(0, cutoff).trim();
+      name = name.replaceAll(RegExp(r'[^a-zA-Z0-9\s\-\&]+$'), '').trim();
+      if (name.length < 2 || !RegExp(r'[a-zA-Z]').hasMatch(name)) continue;
 
       var quantity = 1;
-      final qty = RegExp(r'(\d+)\s*[xX]').firstMatch(line);
-      if (qty != null) quantity = int.tryParse(qty.group(1)!) ?? 1;
+      if (quantityMatch != null) {
+        quantity = int.tryParse(quantityMatch.group(1)!) ?? 1;
+      }
 
       items.add(
         ReceiptItem(
-          name: _titleCase(
-            name.replaceAll(RegExp(r'[^a-zA-Z0-9\s\-\&]+$'), '').trim(),
-          ),
+          name: _titleCase(name),
           quantity: quantity,
           total: Money(amount),
         ),
@@ -297,6 +330,30 @@ class ReceiptParser {
       if (items.length >= 30) break;
     }
     return items;
+  }
+
+  /// The last money-looking number on a line, ignoring identifiers.
+  int? _lastAmount(List<RegExpMatch> matches) {
+    for (final match in matches.reversed) {
+      final token = match.group(0)!;
+      if (!_looksLikeAmount(token)) continue;
+      final amount = _parseAmount(token);
+      if (amount == null || amount < 500) continue;
+      return amount;
+    }
+    return null;
+  }
+
+  static bool _isMetadataLine(String lower) =>
+      _metadataWords.any(lower.contains);
+
+  /// Rejects long digit runs without thousands grouping: dates, nota ids, and
+  /// phone numbers. "20261015-0042" is a nota id, not Rp 20.261.015.
+  static bool _looksLikeAmount(String token) {
+    final digits = token.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.isEmpty) return false;
+    if (digits.length <= 7) return true;
+    return RegExp(r'^\d{1,3}([.,]\d{3})+$').hasMatch(token);
   }
 
   static int? _parseAmount(String token) {
@@ -582,7 +639,14 @@ class CategoryClassifier {
       final keywords = <String>{...category.keywords, ...?template?.keywords};
       for (final keyword in keywords) {
         if (keyword.trim().isEmpty) continue;
-        if (normalized.contains(keyword.toLowerCase())) score += 2;
+        // Count every mention: a receipt titled "Kopi Senja" with "Kopi Susu"
+        // on it is stronger evidence for food & drinks than the single word
+        // "air" in "Air Mineral" is for the water bill category.
+        final occurrences = _occurrences(
+          normalized,
+          keyword.toLowerCase().trim(),
+        );
+        score += 2 * (occurrences > 3 ? 3 : occurrences);
       }
 
       if (score > bestScore) {
@@ -600,5 +664,16 @@ class CategoryClassifier {
       if (category.kind == CategoryKind.expense) return category;
     }
     return null;
+  }
+
+  static int _occurrences(String text, String keyword) {
+    if (keyword.isEmpty) return 0;
+    var count = 0;
+    var index = text.indexOf(keyword);
+    while (index >= 0) {
+      count++;
+      index = text.indexOf(keyword, index + keyword.length);
+    }
+    return count;
   }
 }
