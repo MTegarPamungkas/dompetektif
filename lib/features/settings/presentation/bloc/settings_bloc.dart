@@ -54,8 +54,11 @@ class SettingsBloc extends Bloc<SettingsEvent, AppSettings> {
     SettingsBiometricChanged event,
     Emitter<AppSettings> emit,
   ) async {
-    await _save(state.copyWith(biometricEnabled: event.enabled), emit);
-    if (!event.completer.isCompleted) event.completer.complete();
+    try {
+      await _save(state.copyWith(biometricEnabled: event.enabled), emit);
+    } finally {
+      if (!event.completer.isCompleted) event.completer.complete();
+    }
   }
 
   Future<void> _onHideAmountsChanged(
