@@ -44,6 +44,7 @@ class _AuthPageState extends State<AuthPage> {
           AuthFailure.invalidCredentials => l10n.errorInvalidCredentials,
           AuthFailure.emailInUse => l10n.errorEmailInUse,
           AuthFailure.emailNotConfirmed => l10n.errorEmailNotConfirmed,
+          AuthFailure.emailRateLimit => l10n.errorEmailRateLimit,
           AuthFailure.network => l10n.errorNetwork,
           AuthFailure.demoDisabled => l10n.errorDemoDisabled,
           AuthFailure.cloudNotConfigured => l10n.errorCloudNotConfigured,

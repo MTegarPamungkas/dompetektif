@@ -212,6 +212,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         text.contains('email_not_confirmed')) {
       return AuthFailure.emailNotConfirmed;
     }
+    if (text.contains('rate limit') ||
+        text.contains('over_email_send_rate_limit') ||
+        text.contains('too many')) {
+      return AuthFailure.emailRateLimit;
+    }
     if (text.contains('socket') ||
         text.contains('network') ||
         text.contains('failed host lookup') ||

@@ -5,6 +5,7 @@ enum AuthFailure {
   invalidCredentials,
   emailInUse,
   emailNotConfirmed,
+  emailRateLimit,
   network,
   demoDisabled,
   cloudNotConfigured,

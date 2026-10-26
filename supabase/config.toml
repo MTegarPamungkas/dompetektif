@@ -40,7 +40,7 @@ refresh_token_reuse_interval = 10
 [auth.email]
 enable_signup = true
 double_confirm_changes = true
-enable_confirmations = true
+enable_confirmations = false
 
 [functions.investigation-report]
 verify_jwt = true

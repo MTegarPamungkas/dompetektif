@@ -25,7 +25,9 @@ In **Authentication → URL Configuration** add:
   - `http://localhost:8080`
   - `dev.dompetektif://login-callback`
 
-Enable **Email** (email/password) and **Google**. For Google, add the callback
+Enable **Email** (email/password) and **Google**. Email confirmation is off for
+this demo (`enable_confirmations = false`) so new accounts can sign in right
+away. Turn it on and configure custom SMTP before production. For Google, add the callback
 URL shown by Supabase to the Google Cloud OAuth client. The Android manifest
 already registers `dev.dompetektif://login-callback`.
 

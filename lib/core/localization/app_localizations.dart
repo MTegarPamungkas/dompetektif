@@ -907,6 +907,11 @@ class AppLocalizations {
     'Check your email to confirm the account, then sign in.',
   );
 
+  String get errorEmailRateLimit => t(
+    'Terlalu banyak percobaan email. Tunggu sebentar, lalu coba lagi—atau masuk dengan Google.',
+    'Too many email attempts. Wait a moment, then try again—or continue with Google.',
+  );
+
   String get errorNetwork => t(
     'Jaringan bermasalah. Cek koneksimu lalu coba lagi.',
     'Network problem. Check your connection and try again.',

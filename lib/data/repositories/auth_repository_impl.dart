@@ -110,9 +110,12 @@ class AuthRepositoryImpl implements AuthRepository {
     if (user == null) {
       throw StateError('Registrasi berhasil, tetapi sesi belum aktif.');
     }
-    if (client.auth.currentUser != null) {
-      await _ensureScope(user.id, discardDemoData: true);
+    if (response.session == null) {
+      throw StateError(
+        'Email not confirmed. Cek email untuk konfirmasi akun sebelum masuk.',
+      );
     }
+    await _ensureScope(user.id, discardDemoData: true);
     return _mapUser(user);
   }
 
