@@ -55,10 +55,11 @@ flutter pub get
 flutter run -d chrome
 ```
 
-On the auth screen choose **Masuk mode demo** / **Enter demo mode**. The seeder
-creates a believable investigation with wallets, transactions, budgets, receipts,
-recurring rules, notes, and a report. Demo data is stored in Hive (IndexedDB on
-web, app documents on Android) and survives reloads.
+On the auth screen choose **Masuk sebagai detektif demo** / **Enter as demo
+detective**. The seeder creates a believable investigation with wallets,
+transactions, budgets, receipts, recurring rules, notes, and a report. Demo data
+is stored in Hive (IndexedDB on web, app documents on Android) and survives
+reloads.
 
 Useful commands:
 
@@ -75,6 +76,21 @@ apply R8 keep rules for optional ML Kit scripts that are not bundled, plus the M
 component registrars that are discovered and instantiated reflectively at startup.
 Kotlin incremental caching is disabled in `android/gradle.properties` so Windows
 checkouts with the Pub cache on a different drive build reliably.
+
+### Web demo
+
+A demo-mode build is published to GitHub Pages:
+<https://mtegarpamungkas.github.io/dompetektif/>. It runs on seeded local data,
+so it needs no backend or keys.
+
+Publish an update with:
+
+```powershell
+pwsh tool/deploy_pages.ps1
+```
+
+The script builds `build/web_pages` with the project base path and force-pushes
+it to the `gh-pages` branch, which GitHub Pages serves directly.
 
 ---
 
