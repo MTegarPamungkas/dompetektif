@@ -252,8 +252,10 @@ secrets. Without them the artifacts are still valid demo-mode builds.
 - Custom categories are personal by default. If a shared wallet uses someone
   else's custom category, the other member will see it as uncategorized.
 - Web OCR is paste-based by design; native Android uses ML Kit.
-- The Android release build currently uses the debug signing config from the
-  Flutter template. Add a production keystore before publishing to a store.
+- The Android release build uses the local `android/app/debug.keystore` when it
+  exists, and otherwise falls back to the Flutter debug key. This keeps
+  evaluation builds installable; add a dedicated release keystore before
+  publishing to a store.
 - Free-tier AI models and quotas change. `AI_MODEL` and `AI_BASE_URL` are
   configurable, and the heuristic fallback keeps reports available.
 

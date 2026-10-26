@@ -58,6 +58,12 @@ supabase/.temp/
 supabase/.branches/
 supabase/.env.local
 
+# Local Android signing keys
+android/app/debug.keystore
+android/key.properties
+*.jks
+*.keystore
+
 # Tooling
 coverage/
 *.iml
