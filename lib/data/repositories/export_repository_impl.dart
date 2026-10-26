@@ -309,8 +309,8 @@ class ExportRepositoryImpl implements ExportRepository {
                 pw.SizedBox(height: 5),
                 pw.Text(
                   isId
-                      ? 'Laporan ini dibuat otomatis dari data yang tersimpan di perangkat. Periksa kembali bukti fisik sebelum mengambil keputusan finansial.'
-                      : 'This report was generated from data stored on device. Verify physical evidence before making financial decisions.',
+                      ? 'Laporan ini dibuat otomatis dari data di perangkat. Cek lagi bukti fisiknya sebelum mengambil keputusan finansial.'
+                      : 'This report was generated from data on your device. Check the physical evidence before making financial decisions.',
                   style: pw.TextStyle(
                     font: baseFont,
                     fontSize: 8.5,

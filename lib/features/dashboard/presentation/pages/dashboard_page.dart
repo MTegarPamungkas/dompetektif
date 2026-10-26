@@ -725,8 +725,8 @@ class _BudgetAlertStrip extends StatelessWidget {
                       localizedCategoryName(l10n, alerts.first.category),
                     )
                   : l10n.t(
-                      '${alerts.length} Batas TKP perlu perhatian.',
-                      '${alerts.length} limits need attention.',
+                      '${alerts.length} batas perlu diperiksa.',
+                      '${alerts.length} limits need a look.',
                     ),
               style: context.texts.bodySmall?.copyWith(height: 1.45),
             ),

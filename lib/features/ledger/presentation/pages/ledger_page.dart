@@ -56,8 +56,8 @@ class _LedgerPageState extends State<LedgerPage> {
                     '${l10n.caseFile} / ${entries.length} ${l10n.caseCount}',
                 title: l10n.ledger,
                 subtitle: l10n.t(
-                  'Setiap transaksi adalah barang bukti. Saring berkas untuk menemukan pola yang tidak wajar.',
-                  'Every transaction is evidence. Filter the file to surface unusual patterns.',
+                  'Setiap transaksi adalah barang bukti. Filter catatanmu untuk menemukan pola yang janggal.',
+                  'Every transaction is evidence. Filter your records to surface unusual patterns.',
                 ),
                 trailing: FilledButton.icon(
                   onPressed: () => context.push('/transaction/new'),
@@ -109,8 +109,8 @@ class _LedgerPageState extends State<LedgerPage> {
                   icon: Icons.manage_search_rounded,
                   title: l10n.noTransactions,
                   body: l10n.t(
-                    'Mulai catat pengeluaran atau lampirkan struk untuk membangun berkas pertama.',
-                    'Record an expense or attach a receipt to build your first case file.',
+                    'Catat pengeluaran pertamamu atau lampirkan struk untuk mulai membangun berkas.',
+                    'Record your first expense or attach a receipt to start your case file.',
                   ),
                   action: FilledButton.icon(
                     onPressed: () => context.push('/transaction/new'),

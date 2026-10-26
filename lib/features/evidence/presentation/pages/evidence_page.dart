@@ -112,7 +112,7 @@ class _EvidencePageState extends State<EvidencePage> {
                 EmptyState(
                   icon: Icons.document_scanner_outlined,
                   title: l10n.noEvidence,
-                  body: l10n.receiptScanSubtitle,
+                  body: l10n.noEvidenceBody,
                   action: FilledButton.icon(
                     onPressed: () => context.push('/receipt/scan'),
                     icon: const Icon(Icons.document_scanner_outlined, size: 18),

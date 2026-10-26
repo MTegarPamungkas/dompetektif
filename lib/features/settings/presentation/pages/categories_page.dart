@@ -437,13 +437,13 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
                   controller: _keywordsController,
                   label: l10n.categoryKeywords,
                   hint: l10n.t(
-                    'kopi, cafe, starbucks',
+                    'kopi, kafe, starbucks',
                     'coffee, cafe, starbucks',
                   ),
                   prefixIcon: const Icon(Icons.tag_rounded, size: 19),
                   helper: l10n.t(
-                    'Pisahkan dengan koma. Dipakai untuk saran kategori dari struk.',
-                    'Comma separated. Used for receipt category suggestions.',
+                    'Pisahkan dengan koma. Dipakai untuk menebak kategori dari struk.',
+                    'Separate with commas. Used to guess the category from a receipt.',
                   ),
                 ),
                 const SizedBox(height: 18),

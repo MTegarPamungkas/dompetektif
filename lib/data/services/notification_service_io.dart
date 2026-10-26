@@ -13,9 +13,9 @@ class LocalNotificationService implements NotificationService {
   int _nextId = 1000;
 
   static const _channelId = 'dompetektif_alerts';
-  static const _channelName = 'Dompetektif alerts';
+  static const _channelName = 'Pengingat Dompetektif';
   static const _channelDescription =
-      'Batas TKP, kasus mencurigakan, dan transaksi berulang.';
+      'Pengingat batas, transaksi janggal, dan transaksi berulang.';
 
   @override
   Future<void> initialize() async {

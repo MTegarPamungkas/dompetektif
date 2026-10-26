@@ -9,7 +9,7 @@ class UnsupportedReceiptScanner implements ReceiptScanner {
   @override
   Future<String> recognize(Uint8List imageBytes) {
     throw UnsupportedError(
-      'Pemindaian struk dengan kamera tersedia di aplikasi Android. Di web, tempel teks struk secara manual.',
+      'Scan kamera cuma ada di aplikasi Android. Di web, tempel teks struknya.',
     );
   }
 }

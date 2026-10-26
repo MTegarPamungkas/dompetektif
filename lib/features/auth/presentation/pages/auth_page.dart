@@ -338,7 +338,7 @@ class _FeatureStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final items = [
-      (Icons.sync_alt_rounded, l10n.realtime),
+      (Icons.sync_alt_rounded, l10n.syncAuto),
       (Icons.cloud_off_outlined, l10n.offlineFirst),
       (Icons.auto_awesome_outlined, l10n.reportAiSource),
     ];

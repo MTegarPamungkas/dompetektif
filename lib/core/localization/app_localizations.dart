@@ -68,11 +68,11 @@ class AppLocalizations {
 
   String get netShort => t('Bersih', 'Net');
 
-  String get recentEvidence => t('Barang bukti terbaru', 'Recent evidence');
+  String get recentEvidence => t('Struk terbaru', 'Recent receipts');
 
-  String get recentCases => t('Berkas terbaru', 'Recent cases');
+  String get recentCases => t('Transaksi terbaru', 'Recent transactions');
 
-  String get budgetWatch => t('Pantauan Batas TKP', 'Crime scene limits');
+  String get budgetWatch => t('Pantauan batas', 'Limit watch');
 
   String get suspiciousCases => t('Kasus mencurigakan', 'Suspicious cases');
 
@@ -86,12 +86,12 @@ class AppLocalizations {
 
   String get addTransaction => t('Catat transaksi', 'Record transaction');
 
-  String get scanReceipt => t('Kumpulin Barang Bukti', 'Collect Evidence');
+  String get scanReceipt => t('Scan struk', 'Scan receipt');
 
   String get newCase => t('Berkas baru', 'New case');
 
   String get search =>
-      t('Cari merchant, catatan, nominal…', 'Search merchant, note, amount…');
+      t('Cari toko, catatan, atau nominal…', 'Search shop, note, or amount…');
 
   String get all => t('Semua', 'All');
 
@@ -100,18 +100,17 @@ class AppLocalizations {
   String get clearFilters => t('Hapus filter', 'Clear filters');
 
   String get noTransactions =>
-      t('Belum ada berkas transaksi.', 'No transactions yet.');
+      t('Belum ada transaksi.', 'No transactions yet.');
 
   String get noEvidence => t(
-    'Belum ada barang bukti. Mulai dari struk terdekat.',
-    'No evidence yet. Start with a nearby receipt.',
+    'Belum ada struk. Yuk, scan struk pertamamu.',
+    'No receipts yet. Scan your first one.',
   );
 
-  String get noReports =>
-      t('Belum ada laporan penyelidikan.', 'No investigation reports yet.');
+  String get noReports => t('Belum ada laporan.', 'No reports yet.');
 
   String get noBudgets =>
-      t('Belum ada Batas TKP bulan ini.', 'No limits set for this month.');
+      t('Belum ada batas bulan ini.', 'No limits this month.');
 
   String get noNotes => t('Belum ada catatan tim.', 'No case notes yet.');
 
@@ -135,13 +134,13 @@ class AppLocalizations {
 
   String get confirm => t('Konfirmasi', 'Confirm');
 
-  String get loading => t('Menyiapkan berkas…', 'Preparing case files…');
+  String get loading => t('Menyiapkan…', 'Getting ready…');
 
   String get retry => t('Coba lagi', 'Try again');
 
   String get somethingWrong => t(
-    'Ada yang tidak beres saat membuka berkas.',
-    'Something went wrong while opening the file.',
+    'Ada yang tidak beres saat membuka halaman ini.',
+    'Something went wrong while opening this page.',
   );
 
   String get amount => t('Nominal', 'Amount');
@@ -150,7 +149,7 @@ class AppLocalizations {
 
   String get time => t('Waktu', 'Time');
 
-  String get merchant => t('Merchant', 'Merchant');
+  String get merchant => t('Toko', 'Shop');
 
   String get note => t('Catatan', 'Note');
 
@@ -166,7 +165,7 @@ class AppLocalizations {
 
   String get month => t('Bulan', 'Month');
 
-  String get threshold => t('Ambang peringatan', 'Alert threshold');
+  String get threshold => t('Batas peringatan', 'Alert threshold');
 
   String get spent => t('Terpakai', 'Spent');
 
@@ -203,11 +202,11 @@ class AppLocalizations {
   String get demoMode => t('Mode demo lokal', 'Local demo mode');
 
   String get demoNotice => t(
-    'Data tersimpan di perangkat ini. Supabase belum dikonfigurasi, jadi kolaborasi cloud berjalan dalam mode simulasi.',
-    'Data stays on this device. Supabase is not configured, so cloud collaboration runs in simulation mode.',
+    'Data disimpan di HP ini. Fitur kolaborasi cloud masih simulasi.',
+    'Data stays on this phone. Cloud collaboration is still simulated.',
   );
 
-  String get cloudMode => t('Tersambung ke Supabase', 'Connected to Supabase');
+  String get cloudMode => t('Tersambung ke cloud', 'Connected to cloud');
 
   String get signIn => t('Masuk', 'Sign in');
 
@@ -231,14 +230,13 @@ class AppLocalizations {
       t('Buka berkas keuanganmu.', 'Open your financial case file.');
 
   String get authSubtitle => t(
-    'Setiap transaksi adalah barang bukti. Dompetektif membantu menemukan kebocoran sebelum jadi kebiasaan.',
-    'Every transaction is evidence. Dompetektif finds leaks before they become habits.',
+    'Setiap transaksi adalah barang bukti. Dompetektif membantumu menemukan kebocoran sebelum jadi kebiasaan.',
+    'Every transaction is evidence. Dompetektif helps you spot leaks before they become habits.',
   );
 
-  String get noAccount => t('Belum punya berkas?', 'New to the case desk?');
+  String get noAccount => t('Belum punya akun?', 'No account yet?');
 
-  String get haveAccount =>
-      t('Sudah punya berkas?', 'Already have a case file?');
+  String get haveAccount => t('Sudah punya akun?', 'Already have an account?');
 
   String get passwordHint => t('Minimal 6 karakter', 'At least 6 characters');
 
@@ -257,7 +255,7 @@ class AppLocalizations {
       t('Nominal harus lebih dari nol.', 'Amount must be greater than zero.');
 
   String get walletRequired =>
-      t('Pilih dompet terlebih dahulu.', 'Choose a wallet first.');
+      t('Pilih dompet dulu.', 'Choose a wallet first.');
 
   String get categoryRequired => t('Pilih kategori.', 'Choose a category.');
 
@@ -272,79 +270,78 @@ class AppLocalizations {
   );
 
   String get deleteTransactionTitle =>
-      t('Hapus berkas transaksi?', 'Delete this transaction?');
+      t('Hapus transaksi ini?', 'Delete this transaction?');
 
   String get deleteTransactionBody => t(
-    'Transaksi akan dihapus dari perangkat dan ditandai terhapus di cloud.',
-    'The transaction will be removed locally and soft-deleted in the cloud.',
+    'Transaksinya dihapus dari HP ini dan dari cloud.',
+    'It will be removed from this phone and from the cloud.',
   );
 
   String get deleteReceiptTitle =>
-      t('Hapus barang bukti?', 'Delete this evidence?');
+      t('Hapus struk ini?', 'Delete this receipt?');
 
   String get deleteReceiptBody => t(
-    'Gambar struk dan teks OCR akan ikut dihapus.',
-    'The receipt image and OCR text will be deleted.',
+    'Foto struk dan hasil bacaannya ikut terhapus.',
+    'The photo and its reading will be deleted too.',
   );
 
   String get deleteWalletTitle => t('Hapus dompet?', 'Delete this wallet?');
 
   String get deleteWalletBody => t(
-    'Riwayat transaksi tetap tersimpan, tetapi dompet tidak lagi muncul di ringkasan.',
-    'Transaction history stays, but the wallet disappears from summaries.',
+    'Riwayat transaksinya tetap ada, tapi dompet ini tidak muncul lagi di ringkasan.',
+    'Transaction history stays, but this wallet will no longer show in summaries.',
   );
 
   String get deleteCategoryTitle =>
       t('Hapus kategori?', 'Delete this category?');
 
   String get deleteCategoryBody => t(
-    'Transaksi lama tetap memakai nama kategori ini, tetapi kategori tidak bisa dipilih lagi.',
-    'Old transactions keep this category name, but it can no longer be selected.',
+    'Transaksi lama tetap pakai nama kategori ini, tapi kamu tidak bisa memilihnya lagi.',
+    'Older transactions keep this category name, but you can no longer pick it.',
   );
 
-  String get deleteBudgetTitle => t('Hapus Batas TKP?', 'Delete this limit?');
+  String get deleteBudgetTitle => t('Hapus batas ini?', 'Delete this limit?');
 
   String get deleteBudgetBody => t(
-    'Pantauan batas untuk kategori ini akan dihentikan.',
-    'Monitoring for this category will stop.',
+    'Pemantauan batas kategori ini akan dihentikan.',
+    'This category will stop being monitored.',
   );
 
   String get deleteRecurringTitle =>
       t('Hapus transaksi berulang?', 'Delete this recurring rule?');
 
   String get deleteRecurringBody => t(
-    'Transaksi yang sudah tercipta tidak ikut dihapus.',
+    'Transaksi yang sudah dibuat tidak ikut terhapus.',
     'Transactions already created are not deleted.',
   );
 
   String get unsavedChanges => t(
-    'Perubahan belum disimpan. Tinggalkan halaman?',
-    'Changes are not saved. Leave this page?',
+    'Perubahanmu belum disimpan. Tetap keluar?',
+    'Your changes are not saved. Leave anyway?',
   );
 
   String get budgetAlertTitle =>
-      t('Batas TKP terdeteksi', 'Crime scene limit reached');
+      t('Batas TKP hampir jebol', 'Limit almost breached');
 
   String budgetWarning(String category, String percent) => t(
-    'Pengeluaran $category sudah $percent dari Batas TKP.',
-    '$category spending has reached $percent of its limit.',
+    'Pengeluaran $category sudah $percent dari batasnya.',
+    '$category spending is at $percent of its limit.',
   );
 
   String budgetOver(String category) => t(
-    'Kebocoran di kategori $category. Batas TKP sudah terlampaui.',
-    'Leak found in $category. The limit has been exceeded.',
+    'Kebocoran di $category: batasnya sudah terlampaui.',
+    'Leak in $category: the limit is already exceeded.',
   );
 
   String anomalyHeadline(String category) =>
-      t('Ada kebocoran di kategori $category', 'A leak surfaced in $category');
+      t('Ada kebocoran di $category', 'A leak showed up in $category');
 
   String anomalyBody(String merchant, String amount) => t(
-    'Transaksi $merchant sebesar $amount jauh di atas pola biasanya.',
-    'The $merchant transaction of $amount is far above its usual pattern.',
+    'Transaksi $merchant sebesar $amount jauh di atas kebiasaanmu.',
+    'The $merchant transaction of $amount is way above your usual.',
   );
 
-  String get reportGenerate =>
-      t('Susun Laporan Penyelidikan', 'Build Investigation Report');
+  String get reportGenerate => t('Buat laporan', 'Create report');
 
   String get reportGenerating => t('Menyusun laporan…', 'Building report…');
 
@@ -353,8 +350,8 @@ class AppLocalizations {
   String get reportAiSource => t('Analisis AI', 'AI analysis');
 
   String get reportSourceNote => t(
-    'Laporan ini disusun dari data transaksi di perangkat. AI hanya menganalisis ringkasan, bukan mengubah bukti.',
-    'This report is built from on-device transaction data. AI only analyzes the summary, never edits evidence.',
+    'Pilih periode yang mau diusut. Hasilnya bisa langsung kamu baca dan ekspor.',
+    'Pick a period to dig into. Read the result right away or export it.',
   );
 
   String get findings => t('Temuan', 'Findings');
@@ -363,40 +360,49 @@ class AppLocalizations {
 
   String get info => t('Info', 'Info');
 
-  String get recommendations => t('Rekomendasi', 'Recommendations');
+  String get recommendations => t('Saran', 'Suggestions');
 
   String get anomalies => t('Anomali', 'Anomalies');
 
   String get noAnomalies =>
-      t('Tidak ada anomali mencolok.', 'No standout anomalies.');
+      t('Tidak ada yang mencurigakan.', 'Nothing looks suspicious.');
 
   String get exportPdf => t('Ekspor PDF', 'Export PDF');
 
   String get exportCsv => t('Ekspor CSV', 'Export CSV');
 
-  String get exportSuccess =>
-      t('Berkas berhasil dibuat.', 'File created successfully.');
+  String get exportSuccess => t('File berhasil dibuat.', 'File created.');
 
   String get budgetsSubtitle => t(
-    'Tentukan batas wajar per kategori. Detektif akan memberi sinyal sebelum kebocoran membesar.',
-    'Set a reasonable limit per category. The detective warns you before a leak grows.',
+    'Tentukan batas wajar tiap kategori. Detektif akan mengingatkan sebelum kebocoran makin besar.',
+    'Set a sensible limit per category. The detective warns you before a leak gets bigger.',
   );
 
-  String get budgetCreate => t('Pasang Batas TKP', 'Set a limit');
+  String get budgetCreate => t('Pasang batas', 'Set a limit');
 
-  String get budgetEdit => t('Ubah Batas TKP', 'Edit limit');
+  String get budgetEdit => t('Ubah batas', 'Edit limit');
 
   String get budgetThresholdHint => t(
-    'Peringatan muncul saat pemakaian melewati ambang ini.',
-    'A warning appears when spending crosses this threshold.',
+    'Kamu akan dapat peringatan begitu pemakaian melewati angka ini.',
+    'You get a warning once spending crosses this number.',
   );
 
-  String get receiptScanTitle =>
-      t('Kumpulkan Barang Bukti', 'Collect Evidence');
+  String get receiptScanTitle => t('Scan struk', 'Scan receipt');
+
+  String get receiptHeaderTitle => t('Barang bukti baru', 'New evidence');
+
+  String get receiptCaptureTitle => t('Foto struk', 'Photograph the receipt');
+
+  String get scanAgain => t('Ulang', 'Redo');
+
+  String get noEvidenceBody => t(
+    'Scan dari kamera atau pilih foto dari galeri. Hasilnya bisa kamu cek dulu sebelum disimpan.',
+    'Scan with the camera or pick a photo from the gallery. You can check the result before saving.',
+  );
 
   String get receiptScanSubtitle => t(
-    'Foto struk, lalu biarkan detektif membaca merchant, total, tanggal, dan kategori yang paling mungkin.',
-    'Photograph a receipt. The detective reads the merchant, total, date, and most likely category.',
+    'Foto struk, lalu detektif akan membaca toko, total, tanggal, dan kategorinya. Semua masih bisa kamu koreksi.',
+    'Photograph the receipt and the detective will read the shop, total, date, and category. You can still fix anything.',
   );
 
   String get pickFromGallery => t('Pilih dari galeri', 'Pick from gallery');
@@ -406,25 +412,25 @@ class AppLocalizations {
   String get pasteReceipt => t('Tempel teks struk', 'Paste receipt text');
 
   String get pasteReceiptHint => t(
-    'Tempel teks struk di sini. OCR kamera tersedia di aplikasi Android.',
-    'Paste receipt text here. Camera OCR is available in the Android app.',
+    'Scan kamera hanya ada di aplikasi Android. Di sini, tempel saja teks struknya.',
+    'Camera scanning is Android-only. Paste the receipt text here instead.',
   );
 
-  String get analyzeText => t('Analisis teks', 'Analyze text');
+  String get analyzeText => t('Baca teks', 'Read text');
 
   String get ocrUnsupported => t(
-    'Kamera OCR tidak tersedia di perangkat ini. Gunakan tempel teks.',
-    'Camera OCR is unavailable here. Use pasted text.',
+    'Kamera belum tersedia di perangkat ini. Tempel teks struknya saja.',
+    'The camera is not available here. Paste the receipt text instead.',
   );
 
-  String get receiptReview => t('Review barang bukti', 'Review evidence');
+  String get receiptReview => t('Cek hasil scan', 'Check the scan');
 
   String get attachToTransaction =>
       t('Jadikan transaksi', 'Turn into transaction');
 
-  String get saveEvidence => t('Simpan barang bukti', 'Save evidence');
+  String get saveEvidence => t('Simpan struk', 'Save receipt');
 
-  String get savedEvidence => t('Barang bukti tersimpan.', 'Evidence saved.');
+  String get savedEvidence => t('Struk tersimpan.', 'Receipt saved.');
 
   String get rawText => t('Teks struk', 'Receipt text');
 
@@ -432,16 +438,16 @@ class AppLocalizations {
 
   String get noItems => t('Tidak ada item yang terbaca.', 'No items detected.');
 
-  String get confidence => t('Keyakinan', 'Confidence');
+  String get confidence => t('Terbaca', 'Accuracy');
 
   String get receiptAttached =>
-      t('Sudah terhubung ke transaksi', 'Linked to a transaction');
+      t('Sudah jadi transaksi', 'Turned into a transaction');
 
-  String get receiptDraft => t('Belum terhubung', 'Not linked yet');
+  String get receiptDraft => t('Belum jadi transaksi', 'Not a transaction yet');
 
   String get teamSubtitle => t(
-    'Diskusikan temuan, pantau kehadiran, dan jaga agar setiap keputusan punya jejak.',
-    'Discuss findings, watch presence, and keep a trail behind every decision.',
+    'Diskusikan temuan, lihat siapa yang online, dan simpan semua keputusan di satu tempat.',
+    'Discuss findings, see who is online, and keep every decision in one place.',
   );
 
   String get sharedWallets => t('Dompet bersama', 'Shared wallets');
@@ -470,13 +476,13 @@ class AppLocalizations {
       t('Kode undangan tidak valid.', 'That invite code is not valid.');
 
   String get joinedWallet => t(
-    'Berhasil bergabung. Menarik data dompet…',
-    'Joined. Pulling wallet data…',
+    'Kamu berhasil bergabung. Sedang mengambil data dompet…',
+    'You are in. Pulling wallet data…',
   );
 
   String get settingsSubtitle => t(
-    'Atur identitas, tampilan, keamanan, dan data yang disimpan.',
-    'Manage identity, appearance, security, and data.',
+    'Atur profil, tampilan, keamanan, dan datamu.',
+    'Manage your profile, appearance, security, and data.',
   );
 
   String get appearance => t('Tampilan', 'Appearance');
@@ -498,8 +504,8 @@ class AppLocalizations {
   String get biometric => t('Kunci biometrik', 'Biometric lock');
 
   String get biometricSubtitle => t(
-    'Minta sidik jari atau wajah saat membuka aplikasi.',
-    'Ask for fingerprint or face when opening the app.',
+    'Minta sidik jari atau wajah setiap kali membuka aplikasi.',
+    'Ask for a fingerprint or face every time the app opens.',
   );
 
   String get biometricUnavailable => t(
@@ -507,16 +513,15 @@ class AppLocalizations {
     'Biometrics are unavailable on this device.',
   );
 
-  String get biometricReason =>
-      t('Buka berkas Dompetektif', 'Open the Dompetektif case file');
+  String get biometricReason => t('Buka Dompetektif', 'Open Dompetektif');
 
-  String get privacy => t('Privasi angka', 'Amount privacy');
+  String get privacy => t('Privasi nominal', 'Amount privacy');
 
   String get hideAmounts => t('Sembunyikan nominal', 'Hide amounts');
 
   String get hideAmountsSubtitle => t(
-    'Tampilkan •••••• di layar agar aman dilihat orang lain.',
-    'Show •••••• on screen for privacy.',
+    'Nominal diganti •••••• supaya aman dilihat orang lain.',
+    'Amounts turn into •••••• so others cannot read them.',
   );
 
   String get data => t('Data & sinkronisasi', 'Data & sync');
@@ -525,7 +530,7 @@ class AppLocalizations {
 
   String get syncNow => t('Sinkronkan sekarang', 'Sync now');
 
-  String get lastSynced => t('Terakhir sinkron', 'Last synced');
+  String get lastSynced => t('Terakhir disinkronkan', 'Last synced');
 
   String get neverSynced => t('Belum pernah', 'Never');
 
@@ -535,15 +540,15 @@ class AppLocalizations {
       t('Semua perubahan sudah terkirim.', 'All changes are delivered.');
 
   String get offlineNotice => t(
-    'Tidak ada koneksi. Perubahan disimpan di perangkat dan dikirim otomatis saat online.',
-    'No connection. Changes are saved on device and sent automatically when online.',
+    'Tidak ada koneksi. Perubahanmu disimpan di HP dan dikirim otomatis begitu online.',
+    'No connection. Your changes stay on this phone and go out automatically once you are back online.',
   );
 
   String get exportData => t('Ekspor data', 'Export data');
 
   String get exportDataSubtitle => t(
-    'Unduh berkas PDF atau CSV untuk arsip dan audit.',
-    'Download PDF or CSV for archive and audit.',
+    'Unduh PDF atau CSV untuk arsip dan pengecekan.',
+    'Download PDF or CSV for your archive and checks.',
   );
 
   String get account => t('Akun', 'Account');
@@ -553,8 +558,8 @@ class AppLocalizations {
   String get version => t('Versi', 'Version');
 
   String get aboutBody => t(
-    'Dompetektif adalah pelacak pengeluaran dengan sudut pandang investigasi. Data adalah milikmu; mode lokal tetap bisa dipakai tanpa cloud.',
-    'Dompetektif is an expense tracker with an investigation lens. Your data is yours; local mode works without the cloud.',
+    'Dompetektif adalah pelacak pengeluaran bergaya investigasi. Datamu milikmu; mode lokal tetap jalan tanpa cloud.',
+    'Dompetektif is an expense tracker with a detective twist. Your data is yours, and local mode works without the cloud.',
   );
 
   String get demoData => t('Data demo', 'Demo data');
@@ -562,8 +567,8 @@ class AppLocalizations {
   String get resetDemo => t('Reset data demo', 'Reset demo data');
 
   String get resetDemoBody => t(
-    'Semua berkas demo di perangkat ini akan dihapus dan dibuat ulang.',
-    'All demo case files on this device will be erased and rebuilt.',
+    'Semua data demo di HP ini akan dihapus lalu dibuat ulang.',
+    'All demo data on this phone will be erased and rebuilt.',
   );
 
   String get reset => t('Reset', 'Reset');
@@ -595,11 +600,11 @@ class AppLocalizations {
 
   String get categoryKind => t('Jenis kategori', 'Category type');
 
-  String get categoryKeywords => t('Kata kunci OCR', 'OCR keywords');
+  String get categoryKeywords => t('Kata kunci struk', 'Receipt keywords');
 
   String get categoryKeywordsHint => t(
-    'Pisahkan dengan koma, mis. kopi, cafe, resto',
-    'Separate with commas, e.g. coffee, cafe, resto',
+    'Pisahkan dengan koma, misalnya: kopi, kafe, resto',
+    'Separate with commas, for example: coffee, cafe, resto',
   );
 
   String get categoryCreate => t('Tambah kategori', 'Add category');
@@ -634,11 +639,11 @@ class AppLocalizations {
 
   String get inactive => t('Nonaktif', 'Inactive');
 
-  String get runDue => t('Jalankan yang jatuh tempo', 'Run due');
+  String get runDue => t('Proses yang jatuh tempo', 'Run what is due');
 
   String get dueCompleted => t(
-    'Transaksi berulang telah dijalankan.',
-    'Recurring transactions have been run.',
+    'Transaksi berulang sudah dijalankan.',
+    'Recurring transactions are done.',
   );
 
   String get noDue =>
@@ -648,13 +653,13 @@ class AppLocalizations {
 
   String get monthPrevious => t('Bulan lalu', 'Last month');
 
-  String get generate => t('Susun laporan', 'Generate');
+  String get generate => t('Buat laporan', 'Create');
 
   String get generating => t('Menyusun…', 'Generating…');
 
   String get reportPeriod => t('Periode laporan', 'Report period');
 
-  String get reportHeadline => t('Judul temuan', 'Headline');
+  String get reportHeadline => t('Judul laporan', 'Report headline');
 
   String get reportSummary => t('Ringkasan', 'Summary');
 
@@ -670,34 +675,34 @@ class AppLocalizations {
       t('Belum ada laporan untuk periode ini', 'No report for this period yet');
 
   String get insightEmptyBody => t(
-    'Susun laporan untuk melihat pola pengeluaran, kebocoran kategori, dan rekomendasi yang bisa ditindaklanjuti.',
-    'Generate a report to see spending patterns, category leaks, and actionable recommendations.',
+    'Buat laporan untuk melihat pola pengeluaran, kebocoran kategori, dan saran yang bisa langsung kamu jalankan.',
+    'Create a report to see spending patterns, category leaks, and suggestions you can act on.',
   );
 
   String get saveTransactionSuccess =>
-      t('Berkas transaksi tersimpan.', 'Transaction recorded.');
+      t('Transaksi tersimpan.', 'Transaction saved.');
 
   String get saveTransaction => t('Simpan transaksi', 'Save transaction');
 
-  String get deleteSuccess => t('Berkas dihapus.', 'Record deleted.');
+  String get deleteSuccess => t('Data dihapus.', 'Deleted.');
 
   String get syncDone => t('Sinkronisasi selesai.', 'Sync complete.');
 
   String get syncFailed =>
       t('Sinkronisasi gagal. Coba lagi.', 'Sync failed. Try again.');
 
-  String get locked => t('Berkas terkunci', 'Case file locked');
+  String get locked => t('Aplikasi terkunci', 'App locked');
 
   String get unlock => t('Buka dengan biometrik', 'Unlock with biometrics');
 
-  String get unlocked => t('Berkas terbuka.', 'Case file unlocked.');
+  String get unlocked => t('Aplikasi terbuka.', 'App unlocked.');
 
   String get signOutConfirm =>
-      t('Keluar dari berkas ini?', 'Leave this case file?');
+      t('Keluar dari akun ini?', 'Sign out of this account?');
 
   String get signOutBody => t(
-    'Sesi ini akan diakhiri dan data kasus lokal dibersihkan. Data di cloud tetap aman.',
-    'This session will end and the local case cache will be cleared. Cloud data stays safe.',
+    'Kamu akan keluar dan data lokal di HP ini dibersihkan. Data di cloud tetap aman.',
+    'You will be signed out and local data on this phone cleared. Cloud data stays safe.',
   );
 
   String get welcomeDetective =>
@@ -707,9 +712,9 @@ class AppLocalizations {
 
   String get confidential => t('RAHASIA', 'CONFIDENTIAL');
 
-  String get evidenceCount => t('barang bukti', 'evidence items');
+  String get evidenceCount => t('struk', 'receipts');
 
-  String get caseCount => t('berkas', 'cases');
+  String get caseCount => t('transaksi', 'transactions');
 
   String get viewAll => t('Lihat semua', 'View all');
 
@@ -728,9 +733,9 @@ class AppLocalizations {
   String get moreThanLastMonth =>
       t('lebih besar dari bulan lalu', 'more than last month');
 
-  String get topMerchants => t('Merchant teratas', 'Top merchants');
+  String get topMerchants => t('Toko teratas', 'Top shops');
 
-  String get noMerchants => t('Belum ada merchant.', 'No merchants yet.');
+  String get noMerchants => t('Belum ada toko.', 'No shops yet.');
 
   String get caseNoteHint =>
       t('Tulis temuan untuk tim…', 'Write a finding for the team…');
@@ -744,12 +749,12 @@ class AppLocalizations {
       t('Buat dompet pertama', 'Create your first wallet');
 
   String get createFirstWalletBody => t(
-    'Setelah dompet dibuat, transaksi dan Batas TKP bisa dicatat.',
-    'Once a wallet exists, you can record transactions and limits.',
+    'Setelah dompet dibuat, kamu bisa mencatat transaksi dan memasang batas.',
+    'Once a wallet exists, you can record transactions and set limits.',
   );
 
   String get demoSeedReady =>
-      t('Data demo siap diinvestigasi.', 'Demo case files are ready.');
+      t('Data demo siap diusut.', 'Demo case files are ready.');
 
   String get today => t('Hari ini', 'Today');
 
@@ -757,7 +762,7 @@ class AppLocalizations {
 
   String get unknownDate => t('Tanggal tidak dikenal', 'Unknown date');
 
-  String get unknownMerchant => t('Merchant tidak dikenal', 'Unknown merchant');
+  String get unknownMerchant => t('Toko tidak dikenal', 'Unknown shop');
 
   String get transferFromTo => t('Transfer antar dompet', 'Wallet transfer');
 
@@ -813,41 +818,41 @@ class AppLocalizations {
   String get remoteImage =>
       t('Gambar tersimpan di cloud', 'Image stored in the cloud');
 
-  String get attachReceipt => t('Lampirkan barang bukti', 'Attach evidence');
+  String get attachReceipt => t('Lampirkan struk', 'Attach receipt');
 
-  String get removeReceipt => t('Lepas barang bukti', 'Remove evidence');
+  String get removeReceipt => t('Lepas struk', 'Remove receipt');
 
   String get transactionSaved =>
       t('Transaksi tersimpan.', 'Transaction saved.');
 
   String get saving => t('Menyimpan…', 'Saving…');
 
-  String get analyzing => t('Menganalisis…', 'Analyzing…');
+  String get analyzing => t('Membaca struk…', 'Reading receipt…');
 
   String get scanHintAndroid => t(
-    'Posisikan struk di area terang. OCR berjalan di perangkat, bukan di cloud.',
-    'Place the receipt in good light. OCR runs on device, not in the cloud.',
+    'Taruh struk di tempat terang dan pastikan tulisannya kelihatan. Semua diproses di HP kamu, bukan di cloud.',
+    'Put the receipt in good light and keep the text visible. Everything runs on your phone, not in the cloud.',
   );
 
   String get cameraUnavailable => t(
-    'Kamera hanya tersedia di aplikasi Android.',
-    'Camera is only available in the Android app.',
+    'Kamera hanya bisa dipakai di aplikasi Android.',
+    'The camera only works in the Android app.',
   );
 
   String get scanFailed => t(
-    'Struk belum bisa dibaca. Coba foto ulang atau tempel teks.',
-    'Could not read the receipt. Retake the photo or paste the text.',
+    'Struknya belum terbaca. Coba foto ulang, atau tempel teksnya.',
+    'Could not read the receipt. Try another photo, or paste the text.',
   );
 
-  String get parseFailed => t(
-    'Teks struk belum bisa dianalisis.',
-    'Could not analyze the receipt text.',
+  String get parseFailed =>
+      t('Teks struknya belum bisa dibaca.', 'Could not read the receipt text.');
+
+  String get noTextDetected => t(
+    'Tidak ada teks yang terbaca di gambar itu.',
+    'No text was found in that image.',
   );
 
-  String get noTextDetected =>
-      t('Tidak ada teks yang terdeteksi.', 'No text detected.');
-
-  String get receiptMerchantHint => t('Nama merchant', 'Merchant name');
+  String get receiptMerchantHint => t('Nama toko', 'Shop name');
 
   String get receiptTotalHint => t('Total struk', 'Receipt total');
 
@@ -856,14 +861,14 @@ class AppLocalizations {
   String get receiptCategoryHint =>
       t('Kategori yang disarankan', 'Suggested category');
 
-  String get saveAsDraft => t('Simpan sebagai draft', 'Save as draft');
+  String get saveAsDraft => t('Simpan sebagai draf', 'Save as draft');
 
   String get createTransactionFromReceipt =>
-      t('Buat transaksi dari bukti', 'Create transaction from evidence');
+      t('Buat transaksi dari struk', 'Create transaction from receipt');
 
   String get transactionFromReceiptHint => t(
-    'Nominal, merchant, tanggal, dan kategori sudah diisi dari struk. Periksa sebelum menyimpan.',
-    'Amount, merchant, date, and category are prefilled from the receipt. Review before saving.',
+    'Nominal, toko, tanggal, dan kategori sudah diisi otomatis. Cek lagi sebelum menyimpan.',
+    'Amount, shop, date, and category are filled in for you. Check them before saving.',
   );
 
   String get teamPresence => t('Sedang online', 'Online now');
@@ -893,50 +898,50 @@ class AppLocalizations {
   );
 
   String get errorEmailNotConfirmed => t(
-    'Cek email untuk konfirmasi akun sebelum masuk.',
-    'Check your email to confirm the account before signing in.',
+    'Cek emailmu untuk konfirmasi akun sebelum masuk.',
+    'Check your email to confirm the account, then sign in.',
   );
 
   String get errorNetwork => t(
-    'Jaringan bermasalah. Periksa koneksi lalu coba lagi.',
+    'Jaringan bermasalah. Cek koneksimu lalu coba lagi.',
     'Network problem. Check your connection and try again.',
   );
 
   String get errorAuthGeneric =>
-      t('Autentikasi gagal. Coba lagi.', 'Authentication failed. Try again.');
+      t('Gagal masuk. Coba lagi.', 'Could not sign in. Try again.');
 
   String get errorDemoDisabled => t(
-    'Mode demo tidak tersedia saat Supabase aktif.',
-    'Demo mode is unavailable while Supabase is configured.',
+    'Mode demo tidak bisa dipakai saat cloud aktif.',
+    'Demo mode is unavailable while the cloud is on.',
   );
 
   String get errorCloudNotConfigured => t(
-    'Cloud belum dikonfigurasi. Gunakan mode demo atau isi kredensial Supabase.',
-    'Cloud is not configured. Use demo mode or provide Supabase credentials.',
+    'Cloud belum diatur. Pakai mode demo dulu, atau hubungi admin.',
+    'The cloud is not set up. Use demo mode for now, or ask your admin.',
   );
 
   String get oauthRedirectHint => t(
-    'Login Google membuka browser. Kembali ke aplikasi setelah selesai.',
-    'Google login opens the browser. Return to the app when finished.',
+    'Kamu akan diarahkan ke browser untuk masuk dengan Google. Setelah selesai, kembali ke aplikasi ini.',
+    'You will be sent to the browser to sign in with Google. Come back to the app when done.',
   );
 
   String get sessionExpired => t(
-    'Sesi berakhir. Masuk kembali untuk melanjutkan.',
-    'Session expired. Sign in to continue.',
+    'Sesimu berakhir. Masuk lagi untuk melanjutkan.',
+    'Your session expired. Sign in again to continue.',
   );
 
   String get passwordReset => t('Lupa kata sandi?', 'Forgot password?');
 
   String get passwordResetHint => t(
-    'Fitur reset kata sandi tersedia di Supabase. Hubungi admin proyek jika perlu bantuan.',
-    'Password reset is handled by Supabase. Contact the project admin for help.',
+    'Reset kata sandi belum ada di aplikasi. Hubungi admin kalau butuh bantuan.',
+    'Password reset is not in the app yet. Ask the admin for help.',
   );
 
   String get reportWalletScope => t('Cakupan dompet', 'Wallet scope');
 
   String get allWalletsScope => t('Semua dompet', 'All wallets');
 
-  String get exportIncludes => t('Berkas akan memuat', 'The file will include');
+  String get exportIncludes => t('File akan memuat', 'The file will include');
 
   String get transactions => t('transaksi', 'transactions');
 
@@ -947,20 +952,20 @@ class AppLocalizations {
   String get csvFormat => t('CSV — siap olah', 'CSV — spreadsheet ready');
 
   String get reportExportHint => t(
-    'Ekspor mengambil data periode laporan yang sedang dibuka.',
-    'Export uses the period of the report currently open.',
+    'Ekspor memakai periode laporan yang sedang kamu buka.',
+    'Export uses the period of the report you have open.',
   );
 
   String get evidenceVault => t('Lemari barang bukti', 'Evidence vault');
 
   String get vaultSubtitle => t(
-    'Semua struk, teks OCR, dan tautan transaksi tersimpan rapi.',
-    'Every receipt, OCR text, and transaction link in one place.',
+    'Semua struk, hasil bacaan, dan tautan transaksinya ada di sini.',
+    'Every receipt, its reading, and its transaction link in one place.',
   );
 
-  String get scanNow => t('Pindai sekarang', 'Scan now');
+  String get scanNow => t('Scan sekarang', 'Scan now');
 
-  String get draft => t('Draft', 'Draft');
+  String get draft => t('Draf', 'Draft');
 
   String get parsed => t('Terbaca', 'Parsed');
 
@@ -972,12 +977,11 @@ class AppLocalizations {
 
   String get total => t('Total', 'Total');
 
-  String get merchantFromReceipt =>
-      t('Merchant dari struk', 'Merchant from receipt');
+  String get merchantFromReceipt => t('Toko di struk', 'Shop on receipt');
 
-  String get dateFromReceipt => t('Tanggal dari struk', 'Date from receipt');
+  String get dateFromReceipt => t('Tanggal di struk', 'Date on receipt');
 
-  String get totalFromReceipt => t('Total dari struk', 'Total from receipt');
+  String get totalFromReceipt => t('Total di struk', 'Total on receipt');
 
   String get tapToView => t('Ketuk untuk membuka', 'Tap to open');
 
@@ -987,7 +991,7 @@ class AppLocalizations {
   String get noImage => t('Tanpa gambar', 'No image');
 
   String get evidenceDraftSaved =>
-      t('Draft barang bukti tersimpan.', 'Evidence draft saved.');
+      t('Struk disimpan sebagai draf.', 'Receipt saved as a draft.');
 
   String get linkedTransaction => t('Transaksi terkait', 'Linked transaction');
 
@@ -1013,8 +1017,7 @@ class AppLocalizations {
 
   String get pullToRefresh => t('Tarik untuk menyegarkan', 'Pull to refresh');
 
-  String get allCaughtUp =>
-      t('Semua berkas sudah diperiksa.', 'Every file has been reviewed.');
+  String get allCaughtUp => t('Semua sudah beres.', 'All caught up.');
 
   String get lightMode => t('Mode terang', 'Light mode');
 
@@ -1037,13 +1040,13 @@ class AppLocalizations {
   String get budgetOf => t('dari', 'of');
 
   String get noBudgetThisMonth => t(
-    'Belum ada batas untuk kategori ini bulan ini.',
+    'Belum ada batas kategori ini bulan ini.',
     'No limit for this category this month.',
   );
 
   String get categoriesSubtitle => t(
-    'Kategori bawaan bisa dipakai langsung. Tambahkan kategori kustom untuk kebiasaan unikmu.',
-    'Built-in categories are ready to use. Add custom ones for your own habits.',
+    'Kategori bawaan bisa dipakai langsung. Tambahkan kategori kustom untuk kebiasaanmu yang khas.',
+    'Built-in categories are ready to use. Add your own for habits that are uniquely yours.',
   );
 
   String get walletsSubtitle => t(
@@ -1052,8 +1055,8 @@ class AppLocalizations {
   );
 
   String get recurringSubtitle => t(
-    'Catat gaji, langganan, dan sewa sekali. Detektif akan membuat transaksinya saat jatuh tempo.',
-    'Set salary, subscriptions, and rent once. The detective records them when due.',
+    'Catat gaji, langganan, dan sewa sekali saja. Detektif akan mencatat transaksinya saat jatuh tempo.',
+    'Set salary, subscriptions, and rent once. The detective records them when they are due.',
   );
 
   String get openSettings => t('Buka pengaturan', 'Open settings');
@@ -1062,23 +1065,17 @@ class AppLocalizations {
 
   String get noActivity => t('Belum ada aktivitas.', 'No activity yet.');
 
-  String get errorLoadData => t(
-    'Data belum bisa dimuat. Coba lagi.',
-    'Could not load data. Try again.',
-  );
+  String get errorLoadData =>
+      t('Data gagal dimuat. Coba lagi.', 'Could not load data. Try again.');
 
-  String get errorSaveData => t(
-    'Data belum bisa disimpan. Coba lagi.',
-    'Could not save data. Try again.',
-  );
+  String get errorSaveData =>
+      t('Data gagal disimpan. Coba lagi.', 'Could not save data. Try again.');
 
-  String get errorDeleteData => t(
-    'Data belum bisa dihapus. Coba lagi.',
-    'Could not delete data. Try again.',
-  );
+  String get errorDeleteData =>
+      t('Data gagal dihapus. Coba lagi.', 'Could not delete data. Try again.');
 
   String get errorGenerateReport => t(
-    'Laporan belum bisa disusun. Periksa koneksi lalu coba lagi.',
+    'Laporan gagal dibuat. Cek koneksimu lalu coba lagi.',
     'Could not build the report. Check your connection and try again.',
   );
 
@@ -1086,18 +1083,20 @@ class AppLocalizations {
       t('Ekspor gagal. Coba lagi.', 'Export failed. Try again.');
 
   String get errorInvite =>
-      t('Kode undangan belum bisa dibuat.', 'Could not create an invite code.');
+      t('Kode undangan gagal dibuat.', 'Could not create an invite code.');
 
   String get errorJoin => t(
-    'Belum bisa bergabung. Periksa kode dan koneksi.',
-    'Could not join. Check the code and connection.',
+    'Gagal bergabung. Cek kodenya dan koneksimu.',
+    'Could not join. Check the code and your connection.',
   );
 
-  String get errorSendNote =>
-      t('Catatan belum terkirim. Coba lagi.', 'Note was not sent. Try again.');
+  String get errorSendNote => t(
+    'Catatan gagal terkirim. Coba lagi.',
+    'The note was not sent. Try again.',
+  );
 
   String get errorOcr => t(
-    'Struk belum bisa diproses. Coba lagi.',
+    'Struknya belum bisa diproses. Coba lagi.',
     'Could not process the receipt. Try again.',
   );
 
@@ -1106,11 +1105,11 @@ class AppLocalizations {
     'Biometric did not match. Try again.',
   );
 
-  String get lockTitle => t('Berkas ini terkunci', 'This case file is locked');
+  String get lockTitle => t('Dompetektif terkunci', 'Dompetektif is locked');
 
   String get lockSubtitle => t(
-    'Gunakan biometrik untuk membuka kembali Dompetektif.',
-    'Use biometrics to reopen Dompetektif.',
+    'Buka pakai sidik jari atau wajah untuk melanjutkan.',
+    'Use your fingerprint or face to continue.',
   );
 
   String get useBiometric => t('Gunakan biometrik', 'Use biometrics');
@@ -1159,7 +1158,7 @@ class AppLocalizations {
 
   String get statusLocal => t('Lokal', 'Local');
 
-  String get viewEvidence => t('Lihat bukti', 'View evidence');
+  String get viewEvidence => t('Lihat struk', 'View receipt');
 
   String get viewReport => t('Lihat laporan', 'View report');
 
@@ -1188,19 +1187,17 @@ class AppLocalizations {
   String get signInNow => t('Masuk sekarang', 'Sign in now');
 
   String get securityNote => t(
-    'Kunci biometrik memakai sensor perangkat. Dompetektif tidak pernah menyimpan sidik jari atau wajahmu.',
-    'Biometric lock uses your device sensor. Dompetektif never stores your fingerprint or face.',
+    'Kunci biometrik pakai sensor HP-mu. Dompetektif tidak pernah menyimpan sidik jari atau wajahmu.',
+    'Biometric lock uses your phone sensor. Dompetektif never stores your fingerprint or face.',
   );
 
   String get scanTip => t(
-    'Tips: foto struk di permukaan datar dengan pencahayaan cukup. OCR berjalan lokal di Android.',
-    'Tip: photograph receipts on a flat surface with good light. OCR runs locally on Android.',
+    'Tips: taruh struk di permukaan datar dan pastikan cahayanya cukup. Scan berjalan di HP, jadi datamu tetap aman.',
+    'Tip: lay the receipt flat and make sure the light is good. Scanning runs on your phone, so your data stays put.',
   );
 
-  String get evidenceSavedToVault => t(
-    'Barang bukti tersimpan di lemari bukti.',
-    'Evidence saved to the vault.',
-  );
+  String get evidenceSavedToVault =>
+      t('Struk tersimpan di lemari bukti.', 'Receipt saved to the vault.');
 
   String get upToDate =>
       t('Semua data sudah mutakhir.', 'Everything is up to date.');
@@ -1208,7 +1205,7 @@ class AppLocalizations {
   String get settingsSaved => t('Pengaturan tersimpan.', 'Settings saved.');
 
   String get errorSettings =>
-      t('Pengaturan belum bisa disimpan.', 'Could not save settings.');
+      t('Pengaturan gagal disimpan.', 'Could not save settings.');
 
   String get welcomeBack => t('Selamat datang kembali', 'Welcome back');
 
@@ -1231,7 +1228,7 @@ class AppLocalizations {
   String get evidenceFromGallery => t('Dari galeri', 'From gallery');
 
   String get receiptTextAnalyzed =>
-      t('Teks struk dianalisis.', 'Receipt text analyzed.');
+      t('Teks struk berhasil dibaca.', 'Receipt text read.');
 
   String get categorySuggestion => t('Saran kategori', 'Category suggestion');
 
@@ -1240,35 +1237,36 @@ class AppLocalizations {
   String get manualEntry => t('Isi manual', 'Manual entry');
 
   String get receiptReviewHint => t(
-    'Periksa hasil baca sebelum menyimpan. OCR bisa salah membaca angka.',
-    'Review the reading before saving. OCR can misread numbers.',
+    'Cek dulu hasilnya sebelum disimpan. Angka dari struk bisa salah baca.',
+    'Give it a quick check before saving. Receipt numbers can be misread.',
   );
 
-  String get evidencePreview => t('Pratinjau bukti', 'Evidence preview');
+  String get evidencePreview => t('Pratinjau struk', 'Receipt preview');
 
   String get noPreview => t('Pratinjau tidak tersedia', 'No preview available');
 
-  String get linkToTransaction => t('Tautkan transaksi', 'Link transaction');
+  String get linkToTransaction =>
+      t('Tautkan ke transaksi', 'Link to transaction');
 
   String get transactionLinked =>
-      t('Transaksi berhasil ditautkan.', 'Transaction linked.');
+      t('Transaksi sudah ditautkan.', 'Transaction linked.');
 
-  String get openEvidence => t('Buka barang bukti', 'Open evidence');
+  String get openEvidence => t('Buka struk', 'Open receipt');
 
   String get reportReady =>
       t('Laporan penyelidikan siap.', 'Investigation report ready.');
 
   String get reportLocalNotice => t(
-    'Cloud AI tidak aktif. Laporan disusun dengan analisis lokal deterministik agar tetap bisa dipakai offline.',
-    'Cloud AI is inactive. The report uses deterministic local analysis so it still works offline.',
+    'AI cloud sedang tidak aktif. Laporan tetap dibuat dengan analisis lokal, jadi tetap jalan tanpa internet.',
+    'Cloud AI is off. The report still uses local analysis, so it works without internet.',
   );
 
-  String get anomalyDeviation => t('x di atas rata-rata', 'x above average');
+  String get anomalyDeviation => t('kali di atas rata-rata', 'x above average');
 
-  String get budgetProgress => t('Progres batas', 'Limit progress');
+  String get budgetProgress => t('Pemakaian batas', 'Limit usage');
 
   String get noBudgetAlerts =>
-      t('Semua Batas TKP aman.', 'All limits are safe.');
+      t('Semua batas masih aman.', 'All limits are safe.');
 
   String get categoryLeak => t('Kebocoran kategori', 'Category leak');
 
@@ -1298,10 +1296,8 @@ class AppLocalizations {
 
   String get noteBody => t('Isi catatan', 'Note body');
 
-  String get invitationCodeCopied => t(
-    'Kode undangan disalin ke clipboard.',
-    'Invite code copied to clipboard.',
-  );
+  String get invitationCodeCopied =>
+      t('Kode undangan disalin.', 'Invite code copied.');
 
   String get noSharedWalletSelected => t(
     'Pilih dompet bersama untuk melihat tim.',
@@ -1309,13 +1305,13 @@ class AppLocalizations {
   );
 
   String get sharedWalletHint => t(
-    'Dompet bersama memungkinkan beberapa investigator mencatat transaksi dan berdiskusi.',
-    'Shared wallets let several investigators record transactions and discuss.',
+    'Dompet bersama memungkinkan beberapa orang mencatat transaksi dan berdiskusi.',
+    'Shared wallets let several people record transactions and talk it through.',
   );
 
   String get inviteCodeExpires => t(
-    'Bagikan kode ini ke anggota tim. Kode berlaku selama 7 hari.',
-    'Share this code with your team. It stays valid for 7 days.',
+    'Bagikan kode ini ke anggota tim. Berlaku 7 hari.',
+    'Share this code with your team. It works for 7 days.',
   );
 
   String get roleOwner => t('Pemilik', 'Owner');
@@ -1325,15 +1321,15 @@ class AppLocalizations {
   String get roleViewer => t('Pengamat', 'Viewer');
 
   String get noPermission => t(
-    'Peranmu tidak mengizinkan aksi ini.',
-    'Your role does not allow this action.',
+    'Peranmu tidak punya akses untuk ini.',
+    'Your role does not allow this.',
   );
 
-  String get settingsDataHeader => t('Berkas pendukung', 'Supporting files');
+  String get settingsDataHeader => t('Data pendukung', 'Supporting data');
 
   String get settingsDataHeaderBody => t(
-    'Dompet, kategori, dan transaksi berulang adalah fondasi investigasi.',
-    'Wallets, categories, and recurring rules are the foundation of the investigation.',
+    'Dompet, kategori, dan transaksi berulang jadi dasar investigasimu.',
+    'Wallets, categories, and recurring rules are the base of your investigation.',
   );
 
   String get appTaglineShort => t('Usut tuntas.', 'Follow it through.');
@@ -1343,7 +1339,7 @@ class AppLocalizations {
     'Dompetektif is not a financial advisor. Every decision remains yours.',
   );
 
-  String get caseClosed => t('Berkas ditutup.', 'Case closed.');
+  String get caseClosed => t('Kasus selesai.', 'Case closed.');
 
   String get open => t('Buka', 'Open');
 
@@ -1369,7 +1365,7 @@ class AppLocalizations {
 
   String get deletePermanently => t('Hapus permanen', 'Delete permanently');
 
-  String get notFound => t('Berkas tidak ditemukan.', 'File not found.');
+  String get notFound => t('Halaman tidak ditemukan.', 'Page not found.');
 
   String get backToDashboard => t('Kembali ke meja kasus', 'Back to case desk');
 
@@ -1377,21 +1373,23 @@ class AppLocalizations {
       t('Laporan tidak ditemukan.', 'Report not found.');
 
   String get receiptNotFound =>
-      t('Barang bukti tidak ditemukan.', 'Evidence not found.');
+      t('Struk tidak ditemukan.', 'Receipt not found.');
 
   String get onlineMembers => t('Anggota online', 'Online members');
 
   String get noOnlineMembers =>
-      t('Belum ada anggota online.', 'No one is online yet.');
+      t('Belum ada yang online.', 'No one is online yet.');
 
   String get teamChatHint => t(
-    'Percakapan ini tersinkron realtime saat Supabase aktif. Di mode demo, catatan disimpan lokal.',
-    'This conversation syncs in realtime with Supabase. In demo mode, notes stay local.',
+    'Tersinkron otomatis saat cloud aktif.',
+    'Syncs automatically while the cloud is on.',
   );
 
   String get realtime => t('Realtime', 'Realtime');
 
-  String get offlineFirst => t('Offline-first', 'Offline-first');
+  String get syncAuto => t('Sinkron otomatis', 'Auto sync');
+
+  String get offlineFirst => t('Bisa offline', 'Works offline');
 
   String get localAiFallback => t('Analisis lokal', 'Local analysis');
 
@@ -1399,11 +1397,13 @@ class AppLocalizations {
 
   String get settingsProfile => t('Profil', 'Profile');
 
-  String get settingsProfileSubtitle =>
-      t('Identitas dan sesi saat ini', 'Current identity and session');
+  String get settingsProfileSubtitle => t(
+    'Profil dan sesi yang sedang aktif',
+    'Your profile and current session',
+  );
 
   String get settingsAppearanceSubtitle => t(
-    'Tema, bahasa, dan privasi angka',
+    'Tema, bahasa, dan privasi nominal',
     'Theme, language, and amount privacy',
   );
 

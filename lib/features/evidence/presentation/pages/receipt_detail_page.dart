@@ -313,7 +313,7 @@ class _ReceiptDetailPageState extends State<ReceiptDetailPage> {
       showAppSnackBar(
         context,
         context.l10n.t(
-          'Buat dompet dan kategori terlebih dahulu.',
+          'Buat dompet dan kategori dulu, ya.',
           'Create a wallet and category first.',
         ),
         error: true,

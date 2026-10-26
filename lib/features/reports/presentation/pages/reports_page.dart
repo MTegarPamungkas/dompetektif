@@ -42,8 +42,8 @@ class ReportsPage extends StatelessWidget {
                     '${l10n.caseFile} / ${state.reports.length} ${l10n.reports.toLowerCase()}',
                 title: l10n.reports,
                 subtitle: l10n.t(
-                  'Laporan Penyelidikan merangkum pola, kebocoran kategori, dan langkah lanjutan. AI hanya membaca ringkasan, bukan data mentah.',
-                  'Investigation Reports summarize patterns, category leaks, and next steps. AI reads summaries, never raw records.',
+                  'Laporan menyimpulkan pola pengeluaran, kebocoran kategori, dan langkah berikutnya. AI cuma membaca ringkasan, bukan data mentahmu.',
+                  'Reports sum up spending patterns, category leaks, and next steps. AI reads summaries, never your raw records.',
                 ),
               ),
               const SizedBox(height: 22),

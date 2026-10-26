@@ -361,8 +361,8 @@ class _TransactionEditorPageState extends State<TransactionEditorPage> {
                         controller: _noteController,
                         label: l10n.note,
                         hint: l10n.t(
-                          'Keterangan tambahan untuk berkas',
-                          'Additional context for the case file',
+                          'Catatan tambahan untuk transaksi ini',
+                          'Extra context for this transaction',
                         ),
                         maxLines: 3,
                         prefixIcon: const Padding(

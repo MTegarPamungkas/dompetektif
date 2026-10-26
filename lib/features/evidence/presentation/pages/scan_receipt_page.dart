@@ -106,8 +106,8 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       DossierHeader(
-                        eyebrow: '${l10n.caseFile} / OCR',
-                        title: l10n.receiptScanTitle,
+                        eyebrow: '${l10n.caseFile} / SCAN',
+                        title: l10n.receiptHeaderTitle,
                         subtitle: l10n.receiptScanSubtitle,
                         compact: true,
                         trailing: CaseStamp(
@@ -155,7 +155,7 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
                         ),
                         if (state.processing) ...[
                           const SizedBox(height: 14),
-                          const LoadingState(label: 'Menganalisis…'),
+                          LoadingState(label: l10n.analyzing),
                         ],
                       ] else
                         _buildReview(context, state),
@@ -404,7 +404,11 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
                                 _categoryId = null;
                               }),
                         icon: const Icon(Icons.refresh_rounded, size: 17),
-                        label: Text(l10n.scanNow),
+                        label: Text(
+                          l10n.scanAgain,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -562,7 +566,7 @@ class _CaptureCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           Text(
-            l10n.receiptScanTitle,
+            l10n.receiptCaptureTitle,
             style: context.texts.titleLarge,
             textAlign: TextAlign.center,
           ),

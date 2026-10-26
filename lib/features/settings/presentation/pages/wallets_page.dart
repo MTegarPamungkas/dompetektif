@@ -470,8 +470,8 @@ class _WalletEditorSheetState extends State<_WalletEditorSheet> {
                   controller: _balanceController,
                   label: l10n.openingBalance,
                   helper: l10n.t(
-                    'Saldo saat dompet mulai dipakai.',
-                    'Balance when this wallet starts.',
+                    'Saldo awal saat dompet mulai dipakai.',
+                    'Starting balance when this wallet goes live.',
                   ),
                 ),
                 const SizedBox(height: 15),

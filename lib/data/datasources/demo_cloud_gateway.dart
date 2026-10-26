@@ -164,7 +164,7 @@ class DemoCloudGateway implements CloudGateway {
         ReportFinding(
           title: isId ? 'Pusat pengeluaran' : 'Spending hotspot',
           detail: isId
-              ? '${top.category.name} menyerap ${MoneyFormatter.percent(top.ratio, localeCode: localeCode)} dari pengeluaran periode ini (${MoneyFormatter.format(top.amount.amountMinor, localeCode: localeCode)}).'
+              ? '${top.category.name} menyerap ${MoneyFormatter.percent(top.ratio, localeCode: localeCode)} pengeluaran periode ini (${MoneyFormatter.format(top.amount.amountMinor, localeCode: localeCode)}).'
               : '${top.category.name} absorbed ${MoneyFormatter.percent(top.ratio, localeCode: localeCode)} of this period’s spending (${MoneyFormatter.format(top.amount.amountMinor, localeCode: localeCode)}).',
           severity: top.ratio >= 0.4
               ? FindingSeverity.warning
@@ -187,7 +187,7 @@ class DemoCloudGateway implements CloudGateway {
         ReportFinding(
           title: isId
               ? 'Batas TKP: ${item.category.name}'
-              : 'Crime scene: ${item.category.name}',
+              : 'Limit: ${item.category.name}',
           detail: isId
               ? 'Terpakai ${MoneyFormatter.format(item.spent.amountMinor, localeCode: localeCode)} dari ${MoneyFormatter.format(item.budget.amount.amountMinor, localeCode: localeCode)} (${MoneyFormatter.percent(item.ratio, localeCode: localeCode)}).'
               : 'Used ${MoneyFormatter.format(item.spent.amountMinor, localeCode: localeCode)} of ${MoneyFormatter.format(item.budget.amount.amountMinor, localeCode: localeCode)} (${MoneyFormatter.percent(item.ratio, localeCode: localeCode)}).',
@@ -207,8 +207,8 @@ class DemoCloudGateway implements CloudGateway {
                       : 'Leak in ${anomaly.categoryName ?? 'category'}')
                 : (isId ? 'Nominal tidak biasa' : 'Unusual amount'),
             detail: isId
-                ? '${anomaly.entry.transaction.displayTitle} ${MoneyFormatter.format(anomaly.entry.transaction.amount.amountMinor, localeCode: localeCode)} — ${anomaly.deviation.toStringAsFixed(1)}× rata-rata historis.'
-                : '${anomaly.entry.transaction.displayTitle} ${MoneyFormatter.format(anomaly.entry.transaction.amount.amountMinor, localeCode: localeCode)} — ${anomaly.deviation.toStringAsFixed(1)}× the historical average.',
+                ? '${anomaly.entry.transaction.displayTitle} ${MoneyFormatter.format(anomaly.entry.transaction.amount.amountMinor, localeCode: localeCode)} — ${anomaly.deviation.toStringAsFixed(1)}× rata-rata biasanya.'
+                : '${anomaly.entry.transaction.displayTitle} ${MoneyFormatter.format(anomaly.entry.transaction.amount.amountMinor, localeCode: localeCode)} — ${anomaly.deviation.toStringAsFixed(1)}× the usual average.',
             transactionId: anomaly.entry.transaction.id,
             amount: anomaly.entry.transaction.amount,
             severity: anomaly.severity == AnomalySeverity.alert
@@ -221,31 +221,31 @@ class DemoCloudGateway implements CloudGateway {
     final recommendations = <String>[
       if (top != null)
         isId
-            ? 'Tetapkan batas mingguan untuk ${top.category.name} dan tinjau setiap Jumat.'
-            : 'Set a weekly cap for ${top.category.name} and review it every Friday.',
+            ? 'Pasang batas mingguan untuk ${top.category.name} dan cek tiap Jumat.'
+            : 'Set a weekly cap for ${top.category.name} and check it every Friday.',
       if (overBudget.isNotEmpty)
         isId
-            ? 'Pindahkan sisa anggaran dari kategori aman untuk menutup ${overBudget.first.category.name}.'
+            ? 'Geser sisa anggaran dari kategori yang aman untuk menutup ${overBudget.first.category.name}.'
             : 'Move leftover budget from safe categories to cover ${overBudget.first.category.name}.',
       if (anomalies.isNotEmpty)
         isId
-            ? 'Buka bukti transaksi terbesar dan konfirmasi apakah pengeluaran itu berulang.'
-            : 'Open the largest receipt and confirm whether the expense is recurring.',
+            ? 'Buka struk transaksi terbesar dan cek apakah pengeluaran itu berulang.'
+            : 'Open the receipt for the largest transaction and check whether it repeats.',
       isId
-          ? 'Aktifkan mode offline dan kunci biometrik agar berkas tetap aman saat bepergian.'
-          : 'Keep offline mode and biometric lock on so the case file stays safe on the go.',
+          ? 'Nyalakan kunci biometrik supaya berkas tetap aman saat bepergian.'
+          : 'Keep the biometric lock on so the case file stays safe on the go.',
     ];
 
     final headline = isId
         ? (overBudget.isEmpty
               ? 'Arus kas terkendali, satu titik perlu diawasi'
-              : 'Ada ${overBudget.length} Batas TKP yang jebol')
+              : 'Ada ${overBudget.length} batas yang jebol')
         : (overBudget.isEmpty
               ? 'Cash flow is under control, one lead needs watching'
-              : '${overBudget.length} crime scenes exceeded the line');
+              : '${overBudget.length} limits went over the line');
     final summary = isId
-        ? 'Dari ${filtered.length} transaksi pada $periodLabel, pemasukan ${MoneyFormatter.format(totals.income.amountMinor, localeCode: localeCode)} dan pengeluaran ${MoneyFormatter.format(totals.expense.amountMinor, localeCode: localeCode)}. Selisih bersih ${MoneyFormatter.format(totals.net.amountMinor, signed: true, localeCode: localeCode)}. Laporan ini disusun lokal dari data perangkat.'
-        : 'Across ${filtered.length} transactions in $periodLabel, income was ${MoneyFormatter.format(totals.income.amountMinor, localeCode: localeCode)} and spending was ${MoneyFormatter.format(totals.expense.amountMinor, localeCode: localeCode)}. Net difference ${MoneyFormatter.format(totals.net.amountMinor, signed: true, localeCode: localeCode)}. This report was assembled locally from on-device data.';
+        ? 'Dari ${filtered.length} transaksi pada $periodLabel, pemasukan ${MoneyFormatter.format(totals.income.amountMinor, localeCode: localeCode)} dan pengeluaran ${MoneyFormatter.format(totals.expense.amountMinor, localeCode: localeCode)}. Selisih bersih ${MoneyFormatter.format(totals.net.amountMinor, signed: true, localeCode: localeCode)}. Laporan ini dibuat dari data di perangkat.'
+        : 'Across ${filtered.length} transactions in $periodLabel, income was ${MoneyFormatter.format(totals.income.amountMinor, localeCode: localeCode)} and spending was ${MoneyFormatter.format(totals.expense.amountMinor, localeCode: localeCode)}. Net difference ${MoneyFormatter.format(totals.net.amountMinor, signed: true, localeCode: localeCode)}. This report was built from data on your device.';
 
     return InvestigationReport(
       id: _uuid.v4(),
