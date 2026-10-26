@@ -296,7 +296,11 @@ class _SettingsPageState extends State<SettingsPage> {
     final l10n = context.l10n;
     if (value) {
       final ok = await getIt<UnlockWithBiometrics>()(l10n.biometricReason);
-      if (!mounted || !ok) return;
+      if (!mounted) return;
+      if (!ok) {
+        showAppSnackBar(context, l10n.errorBiometric, error: true);
+        return;
+      }
     }
     if (!mounted) return;
     await context.read<SettingsBloc>().setBiometric(value);

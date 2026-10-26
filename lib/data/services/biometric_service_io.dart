@@ -1,4 +1,5 @@
 import 'package:dompetektif/domain/services/device_services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -11,7 +12,8 @@ class DeviceBiometricService implements BiometricService {
       final supported = await _auth.isDeviceSupported();
       if (!supported) return false;
       return await _auth.canCheckBiometrics;
-    } on PlatformException {
+    } on PlatformException catch (error) {
+      debugPrint('Biometrics unavailable: ${error.code} ${error.message}');
       return false;
     }
   }
@@ -25,7 +27,8 @@ class DeviceBiometricService implements BiometricService {
         persistAcrossBackgrounding: true,
         sensitiveTransaction: true,
       );
-    } on PlatformException {
+    } on PlatformException catch (error) {
+      debugPrint('Biometric prompt failed: ${error.code} ${error.message}');
       return false;
     }
   }
