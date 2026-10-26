@@ -1,0 +1,47 @@
+{
+    "name": "Dompetektif",
+    "short_name": "Dompetektif",
+    "start_url": ".",
+    "display": "standalone",
+    "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+    "background_color": "#11161B",
+    "theme_color": "#11161B",
+    "description": "Usut tuntas ke mana uangmu pergi. Pelacak pengeluaran bergaya berkas investigasi.",
+    "lang": "id",
+    "dir": "ltr",
+    "categories": ["finance", "productivity"],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Kumpulin Barang Bukti",
+            "short_name": "Barang Bukti",
+            "description": "Pindai struk baru",
+            "url": "./#/receipt/scan",
+            "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192"}]
+        }
+    ]
+}
