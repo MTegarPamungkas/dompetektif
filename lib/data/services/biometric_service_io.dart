@@ -21,12 +21,22 @@ class DeviceBiometricService implements BiometricService {
   @override
   Future<bool> authenticate(String reason) async {
     try {
-      return await _auth.authenticate(
-        localizedReason: reason,
-        biometricOnly: true,
-        persistAcrossBackgrounding: true,
-        sensitiveTransaction: true,
+      // Sticky auth ignores the cancel error while the activity is paused,
+      // which leaves the lock screen stuck at "preparing" after the user
+      // dismisses the prompt with Back.
+      return await _auth
+          .authenticate(
+            localizedReason: reason,
+            biometricOnly: true,
+            persistAcrossBackgrounding: false,
+            sensitiveTransaction: true,
+          )
+          .timeout(const Duration(seconds: 30), onTimeout: () => false);
+    } on LocalAuthException catch (error) {
+      debugPrint(
+        'Biometric prompt failed: ${error.code.name} ${error.description}',
       );
+      return false;
     } on PlatformException catch (error) {
       debugPrint('Biometric prompt failed: ${error.code} ${error.message}');
       return false;

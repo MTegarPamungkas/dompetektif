@@ -54,11 +54,11 @@ class _AppLockGateState extends State<AppLockGate> with WidgetsBindingObserver {
       return;
     }
     if (state == AppLifecycleState.resumed) {
-      if (_locked) {
-        _authenticate();
-      } else {
+      if (!_locked) {
         _maybeLock();
       }
+      // When locked, keep showing the lock screen. Reopening the prompt here
+      // would immediately undo a Back that dismissed it.
     }
   }
 
