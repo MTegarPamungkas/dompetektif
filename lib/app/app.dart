@@ -5,9 +5,9 @@ import 'package:dompetektif/core/di/injection_container.dart';
 import 'package:dompetektif/core/localization/app_localizations.dart';
 import 'package:dompetektif/core/theme/app_theme.dart';
 import 'package:dompetektif/domain/entities/app_settings.dart';
-import 'package:dompetektif/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:dompetektif/features/settings/presentation/cubit/settings_cubit.dart';
-import 'package:dompetektif/features/sync/presentation/cubit/sync_cubit.dart';
+import 'package:dompetektif/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:dompetektif/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:dompetektif/features/sync/presentation/bloc/sync_bloc.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +22,7 @@ class DompetektifApp extends StatefulWidget {
 }
 
 class _DompetektifAppState extends State<DompetektifApp> {
-  late final GoRouter _router = createRouter(getIt<AuthCubit>());
+  late final GoRouter _router = createRouter(getIt<AuthBloc>());
 
   @override
   void dispose() {
@@ -34,11 +34,11 @@ class _DompetektifAppState extends State<DompetektifApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<SettingsCubit>.value(value: getIt<SettingsCubit>()),
-        BlocProvider<AuthCubit>.value(value: getIt<AuthCubit>()),
-        BlocProvider<SyncCubit>.value(value: getIt<SyncCubit>()),
+        BlocProvider<SettingsBloc>.value(value: getIt<SettingsBloc>()),
+        BlocProvider<AuthBloc>.value(value: getIt<AuthBloc>()),
+        BlocProvider<SyncBloc>.value(value: getIt<SyncBloc>()),
       ],
-      child: BlocBuilder<SettingsCubit, AppSettings>(
+      child: BlocBuilder<SettingsBloc, AppSettings>(
         builder: (context, settings) {
           return MaterialApp.router(
             title: AppConfig.appName,

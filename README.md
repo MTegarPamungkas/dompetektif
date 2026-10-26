@@ -165,13 +165,16 @@ lib/
 
 The dependency direction is `presentation → domain ← data`:
 
-- Pages and cubits never read Hive directly. They call domain use cases.
+- Pages dispatch events to blocs and never read Hive directly; blocs call
+  domain use cases.
 - Repositories write to Hive first, then enqueue an outbox operation.
 - Pure calculations (balances, budgets, anomalies, receipt parsing, recurrence)
   live in `domain` and are unit tested.
-- `get_it` composes repositories, cubits, device services, and the sync engine.
+- `get_it` composes repositories, blocs, device services, and the sync engine.
 - `go_router` uses a five-branch shell: **Dashboard**, **Ledger**, **Evidence**,
   **Reports**, and **Team**, with full-screen settings/detail routes.
+- Each feature keeps `presentation/bloc` (events, state, bloc) and
+  `presentation/widgets` (reusable sections) separate from its page.
 
 Money is stored as integer minor units everywhere (`Money.amountMinor`). IDR uses
 zero decimals; other currencies default to two. This avoids floating-point drift

@@ -7,8 +7,8 @@ import 'package:dompetektif/core/responsive/app_breakpoints.dart';
 import 'package:dompetektif/core/theme/app_theme.dart';
 import 'package:dompetektif/core/widgets/case_mark.dart';
 import 'package:dompetektif/domain/entities/sync_status.dart';
-import 'package:dompetektif/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:dompetektif/features/sync/presentation/cubit/sync_cubit.dart';
+import 'package:dompetektif/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:dompetektif/features/sync/presentation/bloc/sync_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -234,7 +234,7 @@ class _TopBar extends StatelessWidget {
             ),
             const SizedBox(width: 2),
           ],
-          BlocBuilder<AuthCubit, AuthState>(
+          BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               final name = state.user?.displayName ?? context.l10n.demoUser;
               final initials = _initials(name);
@@ -513,7 +513,7 @@ class _SyncChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SyncCubit, SyncStatus>(
+    return BlocBuilder<SyncBloc, SyncStatus>(
       builder: (context, status) {
         final l10n = context.l10n;
         final (label, icon, tone) = switch (status.phase) {
@@ -557,7 +557,7 @@ class _SyncChip extends StatelessWidget {
             borderRadius: AppRadius.allPill,
             onTap: status.phase == SyncPhase.syncing
                 ? null
-                : () => context.read<SyncCubit>().syncNow(),
+                : () => context.read<SyncBloc>().syncNow(),
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: side ? 9 : 10,

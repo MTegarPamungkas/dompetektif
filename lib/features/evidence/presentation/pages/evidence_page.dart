@@ -6,8 +6,8 @@ import 'package:dompetektif/core/widgets/app_controls.dart';
 import 'package:dompetektif/core/widgets/app_surfaces.dart';
 import 'package:dompetektif/core/widgets/app_visuals.dart';
 import 'package:dompetektif/domain/entities/receipt.dart';
-import 'package:dompetektif/features/evidence/presentation/cubit/evidence_cubit.dart';
-import 'package:dompetektif/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:dompetektif/features/evidence/presentation/bloc/evidence_bloc.dart';
+import 'package:dompetektif/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -27,8 +27,8 @@ class _EvidencePageState extends State<EvidencePage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final settings = context.watch<SettingsCubit>().state;
-    return BlocListener<EvidenceCubit, EvidenceState>(
+    final settings = context.watch<SettingsBloc>().state;
+    return BlocListener<EvidenceBloc, EvidenceState>(
       listenWhen: (previous, current) => previous.failure != current.failure,
       listener: (context, state) {
         final failure = state.failure;
@@ -40,9 +40,9 @@ class _EvidencePageState extends State<EvidencePage> {
           EvidenceFailure.save => l10n.errorSaveData,
           EvidenceFailure.delete => l10n.errorDeleteData,
         }, error: true);
-        context.read<EvidenceCubit>().clearFailure();
+        context.read<EvidenceBloc>().clearFailure();
       },
-      child: BlocBuilder<EvidenceCubit, EvidenceState>(
+      child: BlocBuilder<EvidenceBloc, EvidenceState>(
         builder: (context, state) {
           final receipts = state.receipts.where((receipt) {
             return switch (_filter) {
@@ -177,7 +177,7 @@ class _EvidencePageState extends State<EvidencePage> {
       confirmLabel: l10n.confirmDelete,
     );
     if (!confirmed || !mounted) return;
-    final success = await context.read<EvidenceCubit>().deleteReceipt(
+    final success = await context.read<EvidenceBloc>().deleteReceipt(
       receipt.id,
     );
     if (!mounted) return;

@@ -6,8 +6,8 @@ import 'package:dompetektif/core/theme/app_theme.dart';
 import 'package:dompetektif/core/widgets/case_mark.dart';
 import 'package:dompetektif/domain/entities/app_settings.dart';
 import 'package:dompetektif/domain/usecases/sync_usecases.dart';
-import 'package:dompetektif/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:dompetektif/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:dompetektif/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:dompetektif/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
 
 /// Keeps confidential case files behind the device biometric gate.
@@ -33,15 +33,15 @@ class _AppLockGateState extends State<AppLockGate> with WidgetsBindingObserver {
   StreamSubscription<AppSettings>? _settingsSubscription;
 
   bool get _shouldLock =>
-      getIt<AuthCubit>().state.signedIn &&
-      getIt<SettingsCubit>().state.biometricEnabled;
+      getIt<AuthBloc>().state.signedIn &&
+      getIt<SettingsBloc>().state.biometricEnabled;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _authSubscription = getIt<AuthCubit>().stream.listen((_) => _maybeLock());
-    _settingsSubscription = getIt<SettingsCubit>().stream.listen(
+    _authSubscription = getIt<AuthBloc>().stream.listen((_) => _maybeLock());
+    _settingsSubscription = getIt<SettingsBloc>().stream.listen(
       (_) => _maybeLock(),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) => _maybeLock());
@@ -97,7 +97,7 @@ class _AppLockGateState extends State<AppLockGate> with WidgetsBindingObserver {
   }
 
   Future<void> _signOut() async {
-    await getIt<AuthCubit>().signOut();
+    await getIt<AuthBloc>().signOut();
     if (!mounted) return;
     setState(() => _locked = false);
   }

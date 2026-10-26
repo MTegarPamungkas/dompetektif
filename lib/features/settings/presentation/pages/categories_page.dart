@@ -7,7 +7,7 @@ import 'package:dompetektif/core/widgets/app_surfaces.dart';
 import 'package:dompetektif/core/widgets/app_visuals.dart';
 import 'package:dompetektif/domain/entities/category.dart';
 import 'package:dompetektif/domain/usecases/auth_usecases.dart';
-import 'package:dompetektif/features/settings/presentation/cubit/settings_data_cubit.dart';
+import 'package:dompetektif/features/settings/presentation/bloc/settings_data_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +32,7 @@ class CategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return BlocListener<SettingsDataCubit, SettingsDataState>(
+    return BlocListener<SettingsDataBloc, SettingsDataState>(
       listenWhen: (previous, current) => previous.failure != current.failure,
       listener: (context, state) {
         final failure = state.failure;
@@ -43,9 +43,9 @@ class CategoriesPage extends StatelessWidget {
           SettingsDataFailure.delete => l10n.errorDeleteData,
           SettingsDataFailure.runDue => l10n.errorSaveData,
         }, error: true);
-        context.read<SettingsDataCubit>().clearFailure();
+        context.read<SettingsDataBloc>().clearFailure();
       },
-      child: BlocBuilder<SettingsDataCubit, SettingsDataState>(
+      child: BlocBuilder<SettingsDataBloc, SettingsDataState>(
         builder: (context, state) {
           final expense = state.categories
               .where((category) => category.kind == CategoryKind.expense)
@@ -117,7 +117,7 @@ class CategoriesPage extends StatelessWidget {
       showDragHandle: true,
       constraints: const BoxConstraints(maxWidth: 600),
       builder: (_) => BlocProvider.value(
-        value: context.read<SettingsDataCubit>(),
+        value: context.read<SettingsDataBloc>(),
         child: _CategoryEditorSheet(category: category),
       ),
     );
@@ -132,7 +132,7 @@ class CategoriesPage extends StatelessWidget {
       confirmLabel: l10n.confirmDelete,
     );
     if (!confirmed || !context.mounted) return;
-    final success = await context.read<SettingsDataCubit>().deleteCategory(
+    final success = await context.read<SettingsDataBloc>().deleteCategory(
       category.id,
     );
     if (!context.mounted) return;
@@ -363,7 +363,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final state = context.watch<SettingsDataCubit>().state;
+    final state = context.watch<SettingsDataBloc>().state;
     return Padding(
       padding: EdgeInsets.only(
         left: 20,
@@ -505,7 +505,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
       createdAt: current?.createdAt ?? now,
       updatedAt: now,
     );
-    final success = await context.read<SettingsDataCubit>().saveCategory(
+    final success = await context.read<SettingsDataBloc>().saveCategory(
       category,
     );
     if (!mounted || !success) return;

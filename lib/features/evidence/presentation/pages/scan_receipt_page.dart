@@ -12,12 +12,14 @@ import 'package:dompetektif/domain/entities/category.dart';
 import 'package:dompetektif/domain/entities/money.dart';
 import 'package:dompetektif/domain/entities/receipt.dart';
 import 'package:dompetektif/domain/usecases/wallet_usecases.dart';
-import 'package:dompetektif/features/evidence/presentation/cubit/evidence_cubit.dart';
+import 'package:dompetektif/features/evidence/presentation/bloc/evidence_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+
+import '../widgets/scan_cards.dart';
 
 class ScanReceiptPage extends StatefulWidget {
   const ScanReceiptPage({super.key});
@@ -71,8 +73,8 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final scannerSupported = context.read<EvidenceCubit>().isScannerSupported;
-    return BlocListener<EvidenceCubit, EvidenceState>(
+    final scannerSupported = context.read<EvidenceBloc>().isScannerSupported;
+    return BlocListener<EvidenceBloc, EvidenceState>(
       listenWhen: (previous, current) => previous.failure != current.failure,
       listener: (context, state) {
         final failure = state.failure;
@@ -84,7 +86,7 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
           EvidenceFailure.save => l10n.errorSaveData,
           EvidenceFailure.delete => l10n.errorDeleteData,
         }, error: true);
-        context.read<EvidenceCubit>().clearFailure();
+        context.read<EvidenceBloc>().clearFailure();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -94,7 +96,7 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
           ),
           title: Text(l10n.receiptScanTitle),
         ),
-        body: BlocBuilder<EvidenceCubit, EvidenceState>(
+        body: BlocBuilder<EvidenceBloc, EvidenceState>(
           builder: (context, state) {
             final margin = MediaQuery.sizeOf(context).width < 600 ? 16.0 : 28.0;
             return SingleChildScrollView(
@@ -118,7 +120,7 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
                       const SizedBox(height: 20),
                       if (_result == null) ...[
                         if (scannerSupported)
-                          _CaptureCard(
+                          CaptureCard(
                             busy: state.processing,
                             onCamera: () => _pick(ImageSource.camera),
                             onGallery: () => _pick(ImageSource.gallery),
@@ -148,7 +150,7 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
                             ),
                           ),
                         const SizedBox(height: 14),
-                        _PasteTextCard(
+                        PasteTextCard(
                           controller: _textController,
                           busy: state.processing,
                           onAnalyze: _analyzeText,
@@ -460,7 +462,7 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
       final bytes = await file.readAsBytes();
       if (!mounted) return;
       setState(() => _imageBytes = bytes);
-      final result = await context.read<EvidenceCubit>().scanImage(bytes);
+      final result = await context.read<EvidenceBloc>().scanImage(bytes);
       if (!mounted || result == null) return;
       if (result.rawText.trim().isEmpty) {
         showAppSnackBar(context, context.l10n.noTextDetected, error: true);
@@ -479,7 +481,7 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
       showAppSnackBar(context, context.l10n.noTextDetected, error: true);
       return;
     }
-    final result = await context.read<EvidenceCubit>().analyzeText(text);
+    final result = await context.read<EvidenceBloc>().analyzeText(text);
     if (!mounted || result == null) return;
     _applyResult(result);
   }
@@ -520,163 +522,12 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
       createdAt: now,
       updatedAt: now,
     );
-    final success = await context.read<EvidenceCubit>().saveReceipt(
+    final success = await context.read<EvidenceBloc>().saveReceipt(
       receipt,
       imageBytes: _imageBytes,
     );
     if (!mounted || !success) return;
     showAppSnackBar(context, l10n.savedEvidence);
     context.pop();
-  }
-}
-
-class _CaptureCard extends StatelessWidget {
-  const _CaptureCard({
-    required this.busy,
-    required this.onCamera,
-    required this.onGallery,
-  });
-
-  final bool busy;
-  final VoidCallback onCamera;
-  final VoidCallback onGallery;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return AppCard(
-      padding: const EdgeInsets.all(22),
-      child: Column(
-        children: [
-          Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-              color: context.dompet.accentSoft,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: context.dompet.accent.withValues(alpha: 0.25),
-              ),
-            ),
-            child: Icon(
-              Icons.document_scanner_rounded,
-              size: 32,
-              color: context.dompet.accent,
-            ),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            l10n.receiptCaptureTitle,
-            style: context.texts.titleLarge,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            l10n.scanHintAndroid,
-            style: context.texts.bodySmall?.copyWith(height: 1.5),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 18),
-          Row(
-            children: [
-              Expanded(
-                child: FilledButton.icon(
-                  onPressed: busy ? null : onCamera,
-                  icon: const Icon(Icons.photo_camera_outlined, size: 18),
-                  label: Text(l10n.takePhoto),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: busy ? null : onGallery,
-                  icon: const Icon(Icons.photo_library_outlined, size: 18),
-                  label: Text(l10n.pickFromGallery),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PasteTextCard extends StatelessWidget {
-  const _PasteTextCard({
-    required this.controller,
-    required this.busy,
-    required this.onAnalyze,
-  });
-
-  final TextEditingController controller;
-  final bool busy;
-  final VoidCallback onAnalyze;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return AppCard(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.content_paste_rounded,
-                size: 18,
-                color: context.dompet.accent,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                l10n.pasteReceipt,
-                style: context.texts.titleSmall?.copyWith(fontSize: 13),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Text(
-            l10n.pasteReceiptHint,
-            style: context.texts.bodySmall?.copyWith(
-              fontSize: 10,
-              height: 1.45,
-            ),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: controller,
-            maxLines: 7,
-            style: context.texts.bodySmall?.copyWith(
-              fontFamily: 'monospace',
-              fontSize: 10.5,
-              height: 1.5,
-            ),
-            decoration: InputDecoration(
-              hintText: l10n.t(
-                'KOPI SENJA\nTotal 45.000\n15/10/2026',
-                'SUNSET COFFEE\nTotal 45,000\n10/15/2026',
-              ),
-              alignLabelWithHint: true,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Align(
-            alignment: Alignment.centerRight,
-            child: FilledButton.tonalIcon(
-              onPressed: busy ? null : onAnalyze,
-              icon: busy
-                  ? const SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.auto_awesome_rounded, size: 17),
-              label: Text(busy ? l10n.analyzing : l10n.analyzeText),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

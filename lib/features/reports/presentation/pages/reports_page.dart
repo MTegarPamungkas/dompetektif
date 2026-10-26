@@ -5,7 +5,7 @@ import 'package:dompetektif/core/widgets/app_controls.dart';
 import 'package:dompetektif/core/widgets/app_surfaces.dart';
 import 'package:dompetektif/core/widgets/app_visuals.dart';
 import 'package:dompetektif/domain/entities/investigation_report.dart';
-import 'package:dompetektif/features/reports/presentation/cubit/report_cubit.dart';
+import 'package:dompetektif/features/reports/presentation/bloc/report_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +16,7 @@ class ReportsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return BlocListener<ReportCubit, ReportState>(
+    return BlocListener<ReportBloc, ReportState>(
       listenWhen: (previous, current) =>
           previous.failure != current.failure ||
           (previous.generating && !current.generating),
@@ -28,12 +28,12 @@ class ReportsPage extends StatelessWidget {
             ReportFailure.generate => l10n.errorGenerateReport,
             ReportFailure.export => l10n.errorExport,
           }, error: true);
-          context.read<ReportCubit>().clearFailure();
+          context.read<ReportBloc>().clearFailure();
         } else if (!state.generating) {
           showAppSnackBar(context, l10n.reportReady);
         }
       },
-      child: BlocBuilder<ReportCubit, ReportState>(
+      child: BlocBuilder<ReportBloc, ReportState>(
         builder: (context, state) {
           return PageScroll(
             children: [
@@ -118,7 +118,7 @@ class ReportsPage extends StatelessWidget {
   }
 
   Future<void> _generate(BuildContext context, DateTime month) async {
-    final success = await context.read<ReportCubit>().generateForMonth(month);
+    final success = await context.read<ReportBloc>().generateForMonth(month);
     if (!context.mounted) return;
     if (success) {
       showAppSnackBar(context, context.l10n.reportReady);

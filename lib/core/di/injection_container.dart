@@ -33,17 +33,17 @@ import 'package:dompetektif/domain/usecases/recurring_usecases.dart';
 import 'package:dompetektif/domain/usecases/settings_usecases.dart';
 import 'package:dompetektif/domain/usecases/sync_usecases.dart';
 import 'package:dompetektif/domain/usecases/wallet_usecases.dart';
-import 'package:dompetektif/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:dompetektif/features/budgets/presentation/cubit/budget_cubit.dart';
-import 'package:dompetektif/features/dashboard/presentation/cubit/dashboard_cubit.dart';
-import 'package:dompetektif/features/evidence/presentation/cubit/evidence_cubit.dart';
-import 'package:dompetektif/features/ledger/presentation/cubit/ledger_cubit.dart';
-import 'package:dompetektif/features/ledger/presentation/cubit/transaction_form_cubit.dart';
-import 'package:dompetektif/features/reports/presentation/cubit/report_cubit.dart';
-import 'package:dompetektif/features/settings/presentation/cubit/settings_cubit.dart';
-import 'package:dompetektif/features/settings/presentation/cubit/settings_data_cubit.dart';
-import 'package:dompetektif/features/sync/presentation/cubit/sync_cubit.dart';
-import 'package:dompetektif/features/team/presentation/cubit/team_cubit.dart';
+import 'package:dompetektif/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:dompetektif/features/budgets/presentation/bloc/budget_bloc.dart';
+import 'package:dompetektif/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:dompetektif/features/evidence/presentation/bloc/evidence_bloc.dart';
+import 'package:dompetektif/features/ledger/presentation/bloc/ledger_bloc.dart';
+import 'package:dompetektif/features/ledger/presentation/bloc/transaction_form_bloc.dart';
+import 'package:dompetektif/features/reports/presentation/bloc/report_bloc.dart';
+import 'package:dompetektif/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:dompetektif/features/settings/presentation/bloc/settings_data_bloc.dart';
+import 'package:dompetektif/features/sync/presentation/bloc/sync_bloc.dart';
+import 'package:dompetektif/features/team/presentation/bloc/team_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -148,7 +148,7 @@ Future<void> configureDependencies({
   getIt.registerLazySingleton<BiometricService>(createBiometricService);
 
   _registerUsecases();
-  _registerCubits();
+  _registerBlocs();
 }
 
 void _registerUsecases() {
@@ -359,16 +359,16 @@ void _registerUsecases() {
   );
 }
 
-void _registerCubits() {
-  getIt.registerLazySingleton<SettingsCubit>(
-    () => SettingsCubit(
+void _registerBlocs() {
+  getIt.registerLazySingleton<SettingsBloc>(
+    () => SettingsBloc(
       getIt<WatchSettings>(),
       getIt<GetSettings>(),
       getIt<UpdateSettings>(),
     ),
   );
-  getIt.registerLazySingleton<AuthCubit>(
-    () => AuthCubit(
+  getIt.registerLazySingleton<AuthBloc>(
+    () => AuthBloc(
       getIt<WatchAuthUser>(),
       getIt<SignInWithEmail>(),
       getIt<SignUpWithEmail>(),
@@ -378,15 +378,15 @@ void _registerCubits() {
       getIt<AuthRepository>(),
     ),
   );
-  getIt.registerLazySingleton<SyncCubit>(
-    () => SyncCubit(getIt<WatchSyncStatus>(), getIt<SyncNow>()),
+  getIt.registerLazySingleton<SyncBloc>(
+    () => SyncBloc(getIt<WatchSyncStatus>(), getIt<SyncNow>()),
   );
 
-  getIt.registerFactory<DashboardCubit>(
-    () => DashboardCubit(getIt<WatchDashboard>()),
+  getIt.registerFactory<DashboardBloc>(
+    () => DashboardBloc(getIt<WatchDashboard>()),
   );
-  getIt.registerFactory<LedgerCubit>(
-    () => LedgerCubit(
+  getIt.registerFactory<LedgerBloc>(
+    () => LedgerBloc(
       getIt<WatchLedger>(),
       getIt<WatchWallets>(),
       getIt<WatchCategories>(),
@@ -394,8 +394,8 @@ void _registerCubits() {
       getIt<DeleteTransaction>(),
     ),
   );
-  getIt.registerFactoryParam<TransactionFormCubit, String?, void>(
-    (transactionId, _) => TransactionFormCubit(
+  getIt.registerFactoryParam<TransactionFormBloc, String?, void>(
+    (transactionId, _) => TransactionFormBloc(
       getIt<WatchWallets>(),
       getIt<WatchCategories>(),
       getIt<GetLedgerEntry>(),
@@ -406,8 +406,8 @@ void _registerCubits() {
       uuid: getIt<Uuid>(),
     ),
   );
-  getIt.registerFactory<BudgetCubit>(
-    () => BudgetCubit(
+  getIt.registerFactory<BudgetBloc>(
+    () => BudgetBloc(
       getIt<WatchBudgetProgress>(),
       getIt<WatchCategories>(),
       getIt<SaveBudget>(),
@@ -415,16 +415,16 @@ void _registerCubits() {
       getIt<NotificationService>(),
     ),
   );
-  getIt.registerFactory<ReportCubit>(
-    () => ReportCubit(
+  getIt.registerFactory<ReportBloc>(
+    () => ReportBloc(
       getIt<WatchReports>(),
       getIt<GenerateInvestigation>(),
       getIt<ExportLedger>(),
       getIt<GetSettings>(),
     ),
   );
-  getIt.registerFactory<EvidenceCubit>(
-    () => EvidenceCubit(
+  getIt.registerFactory<EvidenceBloc>(
+    () => EvidenceBloc(
       getIt<WatchReceipts>(),
       getIt<ScanReceipt>(),
       getIt<ParseReceiptText>(),
@@ -433,8 +433,8 @@ void _registerCubits() {
       getIt<LoadReceiptImage>(),
     ),
   );
-  getIt.registerFactory<TeamCubit>(
-    () => TeamCubit(
+  getIt.registerFactory<TeamBloc>(
+    () => TeamBloc(
       getIt<WatchWallets>(),
       getIt<WatchTeam>(),
       getIt<SendCaseNote>(),
@@ -444,8 +444,8 @@ void _registerCubits() {
       uuid: getIt<Uuid>(),
     ),
   );
-  getIt.registerFactory<SettingsDataCubit>(
-    () => SettingsDataCubit(
+  getIt.registerFactory<SettingsDataBloc>(
+    () => SettingsDataBloc(
       getIt<WatchWallets>(),
       getIt<WatchCategories>(),
       getIt<WatchRecurringRules>(),

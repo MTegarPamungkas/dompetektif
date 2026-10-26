@@ -7,35 +7,35 @@ import 'package:dompetektif/core/theme/app_theme.dart';
 import 'package:dompetektif/core/widgets/app_surfaces.dart';
 import 'package:dompetektif/core/widgets/case_mark.dart';
 import 'package:dompetektif/domain/entities/investigation_report.dart';
-import 'package:dompetektif/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dompetektif/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:dompetektif/features/auth/presentation/pages/auth_page.dart';
-import 'package:dompetektif/features/budgets/presentation/cubit/budget_cubit.dart';
+import 'package:dompetektif/features/budgets/presentation/bloc/budget_bloc.dart';
 import 'package:dompetektif/features/budgets/presentation/pages/budgets_page.dart';
-import 'package:dompetektif/features/dashboard/presentation/cubit/dashboard_cubit.dart';
+import 'package:dompetektif/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:dompetektif/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:dompetektif/features/evidence/presentation/cubit/evidence_cubit.dart';
+import 'package:dompetektif/features/evidence/presentation/bloc/evidence_bloc.dart';
 import 'package:dompetektif/features/evidence/presentation/pages/evidence_page.dart';
 import 'package:dompetektif/features/evidence/presentation/pages/receipt_detail_page.dart';
 import 'package:dompetektif/features/evidence/presentation/pages/scan_receipt_page.dart';
-import 'package:dompetektif/features/ledger/presentation/cubit/ledger_cubit.dart';
-import 'package:dompetektif/features/ledger/presentation/cubit/transaction_form_cubit.dart';
+import 'package:dompetektif/features/ledger/presentation/bloc/ledger_bloc.dart';
+import 'package:dompetektif/features/ledger/presentation/bloc/transaction_form_bloc.dart';
 import 'package:dompetektif/features/ledger/presentation/pages/ledger_page.dart';
 import 'package:dompetektif/features/ledger/presentation/pages/transaction_editor_page.dart';
-import 'package:dompetektif/features/reports/presentation/cubit/report_cubit.dart';
+import 'package:dompetektif/features/reports/presentation/bloc/report_bloc.dart';
 import 'package:dompetektif/features/reports/presentation/pages/report_detail_page.dart';
 import 'package:dompetektif/features/reports/presentation/pages/reports_page.dart';
-import 'package:dompetektif/features/settings/presentation/cubit/settings_data_cubit.dart';
+import 'package:dompetektif/features/settings/presentation/bloc/settings_data_bloc.dart';
 import 'package:dompetektif/features/settings/presentation/pages/categories_page.dart';
 import 'package:dompetektif/features/settings/presentation/pages/recurring_page.dart';
 import 'package:dompetektif/features/settings/presentation/pages/settings_page.dart';
 import 'package:dompetektif/features/settings/presentation/pages/wallets_page.dart';
-import 'package:dompetektif/features/team/presentation/cubit/team_cubit.dart';
+import 'package:dompetektif/features/team/presentation/bloc/team_bloc.dart';
 import 'package:dompetektif/features/team/presentation/pages/team_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-GoRouter createRouter(AuthCubit auth) {
+GoRouter createRouter(AuthBloc auth) {
   return GoRouter(
     initialLocation: '/splash',
     refreshListenable: _AuthRefresh(auth.stream),
@@ -68,7 +68,7 @@ GoRouter createRouter(AuthCubit auth) {
               GoRoute(
                 path: '/dashboard',
                 builder: (context, state) => BlocProvider(
-                  create: (_) => getIt<DashboardCubit>(),
+                  create: (_) => getIt<DashboardBloc>(),
                   child: const DashboardPage(),
                 ),
               ),
@@ -79,7 +79,7 @@ GoRouter createRouter(AuthCubit auth) {
               GoRoute(
                 path: '/ledger',
                 builder: (context, state) => BlocProvider(
-                  create: (_) => getIt<LedgerCubit>(),
+                  create: (_) => getIt<LedgerBloc>(),
                   child: const LedgerPage(),
                 ),
               ),
@@ -90,7 +90,7 @@ GoRouter createRouter(AuthCubit auth) {
               GoRoute(
                 path: '/evidence',
                 builder: (context, state) => BlocProvider(
-                  create: (_) => getIt<EvidenceCubit>(),
+                  create: (_) => getIt<EvidenceBloc>(),
                   child: const EvidencePage(),
                 ),
               ),
@@ -101,7 +101,7 @@ GoRouter createRouter(AuthCubit auth) {
               GoRoute(
                 path: '/reports',
                 builder: (context, state) => BlocProvider(
-                  create: (_) => getIt<ReportCubit>(),
+                  create: (_) => getIt<ReportBloc>(),
                   child: const ReportsPage(),
                 ),
               ),
@@ -112,7 +112,7 @@ GoRouter createRouter(AuthCubit auth) {
               GoRoute(
                 path: '/team',
                 builder: (context, state) => BlocProvider(
-                  create: (_) => getIt<TeamCubit>(),
+                  create: (_) => getIt<TeamBloc>(),
                   child: const TeamPage(),
                 ),
               ),
@@ -127,35 +127,35 @@ GoRouter createRouter(AuthCubit auth) {
       GoRoute(
         path: '/wallets',
         builder: (context, state) => BlocProvider(
-          create: (_) => getIt<SettingsDataCubit>(),
+          create: (_) => getIt<SettingsDataBloc>(),
           child: const WalletsPage(),
         ),
       ),
       GoRoute(
         path: '/categories',
         builder: (context, state) => BlocProvider(
-          create: (_) => getIt<SettingsDataCubit>(),
+          create: (_) => getIt<SettingsDataBloc>(),
           child: const CategoriesPage(),
         ),
       ),
       GoRoute(
         path: '/recurring',
         builder: (context, state) => BlocProvider(
-          create: (_) => getIt<SettingsDataCubit>(),
+          create: (_) => getIt<SettingsDataBloc>(),
           child: const RecurringPage(),
         ),
       ),
       GoRoute(
         path: '/budgets',
         builder: (context, state) => BlocProvider(
-          create: (_) => getIt<BudgetCubit>(),
+          create: (_) => getIt<BudgetBloc>(),
           child: const BudgetsPage(),
         ),
       ),
       GoRoute(
         path: '/transaction/new',
         builder: (context, state) => BlocProvider(
-          create: (_) => getIt<TransactionFormCubit>(param1: null),
+          create: (_) => getIt<TransactionFormBloc>(param1: null),
           child: const TransactionEditorPage(),
         ),
       ),
@@ -164,7 +164,7 @@ GoRouter createRouter(AuthCubit auth) {
         builder: (context, state) {
           final id = state.pathParameters['id']!;
           return BlocProvider(
-            create: (_) => getIt<TransactionFormCubit>(param1: id),
+            create: (_) => getIt<TransactionFormBloc>(param1: id),
             child: TransactionEditorPage(transactionId: id),
           );
         },
@@ -172,7 +172,7 @@ GoRouter createRouter(AuthCubit auth) {
       GoRoute(
         path: '/receipt/scan',
         builder: (context, state) => BlocProvider(
-          create: (_) => getIt<EvidenceCubit>(),
+          create: (_) => getIt<EvidenceBloc>(),
           child: const ScanReceiptPage(),
         ),
       ),
@@ -184,7 +184,7 @@ GoRouter createRouter(AuthCubit auth) {
       GoRoute(
         path: '/report/:id',
         builder: (context, state) => BlocProvider(
-          create: (_) => getIt<ReportCubit>(),
+          create: (_) => getIt<ReportBloc>(),
           child: ReportDetailPage(
             reportId: state.pathParameters['id']!,
             report: state.extra is InvestigationReport

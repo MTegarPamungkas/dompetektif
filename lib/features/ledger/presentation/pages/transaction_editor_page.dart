@@ -8,7 +8,7 @@ import 'package:dompetektif/core/widgets/app_controls.dart';
 import 'package:dompetektif/core/widgets/app_surfaces.dart';
 import 'package:dompetektif/domain/entities/category.dart';
 import 'package:dompetektif/domain/entities/transaction.dart';
-import 'package:dompetektif/features/ledger/presentation/cubit/transaction_form_cubit.dart';
+import 'package:dompetektif/features/ledger/presentation/bloc/transaction_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -47,7 +47,7 @@ class _TransactionEditorPageState extends State<TransactionEditorPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return BlocListener<TransactionFormCubit, TransactionFormState>(
+    return BlocListener<TransactionFormBloc, TransactionFormState>(
       listenWhen: (previous, current) =>
           previous.failure != current.failure ||
           (previous.saving && !current.saving),
@@ -59,10 +59,10 @@ class _TransactionEditorPageState extends State<TransactionEditorPage> {
             TransactionFormFailure.save => l10n.errorSaveData,
             TransactionFormFailure.delete => l10n.errorDeleteData,
           }, error: true);
-          context.read<TransactionFormCubit>().clearFailure();
+          context.read<TransactionFormBloc>().clearFailure();
         }
       },
-      child: BlocConsumer<TransactionFormCubit, TransactionFormState>(
+      child: BlocConsumer<TransactionFormBloc, TransactionFormState>(
         listenWhen: (previous, current) =>
             previous.entry != current.entry ||
             previous.wallets.length != current.wallets.length,
@@ -471,7 +471,7 @@ class _TransactionEditorPageState extends State<TransactionEditorPage> {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     final amount = MoneyFormatter.parse(_amountController.text);
     if (amount == null || amount <= 0 || _walletId == null) return;
-    final success = await context.read<TransactionFormCubit>().save(
+    final success = await context.read<TransactionFormBloc>().save(
       type: _type,
       amountMinor: amount,
       walletId: _walletId!,
@@ -495,7 +495,7 @@ class _TransactionEditorPageState extends State<TransactionEditorPage> {
       confirmLabel: l10n.confirmDelete,
     );
     if (!confirmed || !mounted) return;
-    final success = await context.read<TransactionFormCubit>().delete();
+    final success = await context.read<TransactionFormBloc>().delete();
     if (!mounted) return;
     if (success) {
       showAppSnackBar(context, l10n.deleteSuccess);
