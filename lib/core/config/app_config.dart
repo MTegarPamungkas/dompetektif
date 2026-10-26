@@ -28,9 +28,16 @@ abstract final class AppConfig {
       supabaseUrl.trim().isNotEmpty && supabaseAnonKey.trim().isNotEmpty;
 
   static String get oauthRedirectUrl {
-    if (kIsWeb) return Uri.base.origin;
+    if (kIsWeb) return webOauthRedirect(Uri.base);
     return '$appScheme://login-callback';
   }
+
+  /// Returns the directory the web app is served from, with a trailing slash.
+  ///
+  /// GitHub Pages hosts the app under `/<repo>/`, so redirecting to
+  /// `Uri.base.origin` would drop the path and land outside the app.
+  @visibleForTesting
+  static String webOauthRedirect(Uri base) => base.resolve('.').toString();
 
   static const String privacyUrl = 'https://github.com/dompetektif/app';
 }

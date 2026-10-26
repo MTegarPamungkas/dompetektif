@@ -260,7 +260,7 @@ class _BrandPanel extends StatelessWidget {
               const SizedBox(width: 7),
               Expanded(
                 child: Text(
-                  state.isDemo ? l10n.demoNotice : l10n.reportSourceNote,
+                  state.isDemo ? l10n.demoNotice : l10n.cloudNotice,
                   style: context.texts.bodySmall?.copyWith(
                     fontSize: 10.5,
                     color: context.dompet.inkMuted,

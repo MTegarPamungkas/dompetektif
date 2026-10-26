@@ -354,6 +354,11 @@ class AppLocalizations {
     'Pick a period to dig into. Read the result right away or export it.',
   );
 
+  String get cloudNotice => t(
+    'Data tersimpan aman di cloud dan tersinkron antar perangkat.',
+    'Your data is stored safely in the cloud and synced across devices.',
+  );
+
   String get findings => t('Temuan', 'Findings');
 
   String get nextSteps => t('Langkah berikutnya', 'Next steps');

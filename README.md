@@ -77,11 +77,10 @@ component registrars that are discovered and instantiated reflectively at startu
 Kotlin incremental caching is disabled in `android/gradle.properties` so Windows
 checkouts with the Pub cache on a different drive build reliably.
 
-### Web demo
+### Web build on GitHub Pages
 
-A demo-mode build is published to GitHub Pages:
-<https://mtegarpamungkas.github.io/dompetektif/>. It runs on seeded local data,
-so it needs no backend or keys.
+The web build is published to GitHub Pages:
+<https://mtegarpamungkas.github.io/dompetektif/>.
 
 Publish an update with:
 
@@ -90,7 +89,10 @@ pwsh tool/deploy_pages.ps1
 ```
 
 The script builds `build/web_pages` with the project base path and force-pushes
-it to the `gh-pages` branch, which GitHub Pages serves directly.
+it to the `gh-pages` branch, which GitHub Pages serves directly. When
+`env.json` exists the build connects to Supabase (email and Google login);
+without it the page falls back to local demo mode. The Pages URL must be listed
+under **Authentication → URL Configuration → Redirect URLs** in Supabase.
 
 ---
 
