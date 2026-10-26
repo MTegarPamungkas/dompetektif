@@ -23,7 +23,24 @@ class SupabaseCloudGateway implements CloudGateway {
 
   @override
   Future<void> upsert(String table, Map<String, dynamic> row) async {
+    if (table == 'wallets') {
+      await _upsertWallet(row);
+      return;
+    }
     await _client.from(table).upsert(row, onConflict: _conflictColumns[table]);
+  }
+
+  /// Postgres evaluates the UPDATE policy for `ON CONFLICT DO UPDATE`, even
+  /// when the statement ends up inserting a new row. A new wallet has no
+  /// `wallet_members` row yet, so the membership-based UPDATE policy rejects
+  /// it. Insert first, then fall back to a normal update on a duplicate key.
+  Future<void> _upsertWallet(Map<String, dynamic> row) async {
+    try {
+      await _client.from('wallets').insert(row);
+    } on PostgrestException catch (error) {
+      if (error.code != '23505') rethrow;
+      await _client.from('wallets').update(row).eq('id', row['id'] as String);
+    }
   }
 
   @override

@@ -57,4 +57,61 @@ void main() {
     expect(settings['biometric'], isTrue);
     expect(settings.containsKey('active_wallet_id'), isFalse);
   });
+
+  test(
+    'ensureUserScope keeps the owner data and clears an account switch',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'dompetektif_scope_test_',
+      );
+      final store = LocalStore();
+      addTearDown(() async {
+        await store.close();
+        if (await directory.exists()) {
+          await directory.delete(recursive: true);
+        }
+      });
+
+      await store.init(directory: directory.path, name: 'user_scope');
+      await store.put('wallets', {'id': 'wallet-1', 'name': 'Dompet'});
+      await store.setMeta('settings', {'theme_mode': 'dark'});
+
+      await store.ensureUserScope('user-a');
+      expect(store.getMeta(LocalStore.ownerMetaKey), 'user-a');
+      expect(store.all('wallets'), hasLength(1));
+
+      await store.ensureUserScope('user-a');
+      expect(store.all('wallets'), hasLength(1));
+
+      await store.ensureUserScope('user-b');
+      expect(store.getMeta(LocalStore.ownerMetaKey), 'user-b');
+      expect(store.all('wallets'), isEmpty);
+      expect((store.getMeta('settings') as Map)['theme_mode'], 'dark');
+    },
+  );
+
+  test('ensureUserScope discards unowned demo rows on cloud sign-in', () async {
+    final directory = await Directory.systemTemp.createTemp(
+      'dompetektif_demo_scope_test_',
+    );
+    final store = LocalStore();
+    addTearDown(() async {
+      await store.close();
+      if (await directory.exists()) {
+        await directory.delete(recursive: true);
+      }
+    });
+
+    await store.init(directory: directory.path, name: 'demo_scope');
+    await store.put('wallets', {'id': 'wallet-1', 'name': 'Dompet demo'});
+    await store.setMeta('seed_version', '2026-10-v1');
+    await store.setMeta('demo_user', {'id': 'demo'});
+
+    await store.ensureUserScope('cloud-user', discardDemoData: true);
+
+    expect(store.getMeta(LocalStore.ownerMetaKey), 'cloud-user');
+    expect(store.getMeta('seed_version'), isNull);
+    expect(store.getMeta('demo_user'), isNull);
+    expect(store.all('wallets'), isEmpty);
+  });
 }

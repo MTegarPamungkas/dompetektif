@@ -18,6 +18,8 @@ class LocalStore {
     'reports',
   ];
 
+  static const String ownerMetaKey = 'local_owner_id';
+
   final Map<String, Box<String>> _boxes = {};
   late Box<dynamic> _meta;
   late Box<String> _outbox;
@@ -143,7 +145,8 @@ class LocalStore {
       if (key.startsWith('sync_cursor_') ||
           key.startsWith('alert_sent_') ||
           key == 'seed_version' ||
-          key == 'demo_user') {
+          key == 'demo_user' ||
+          key == ownerMetaKey) {
         await _meta.delete(key);
       }
     }
@@ -154,6 +157,27 @@ class LocalStore {
         ..remove('active_wallet_id');
       await _meta.put('settings', sanitized);
     }
+  }
+
+  /// Makes sure the cached case files belong to the signed-in investigator.
+  ///
+  /// Hive is shared by every session on the device. If a different account is
+  /// opened, its data must not leak into the new account. When a cloud login
+  /// follows a demo session, the demo rows are discarded even if an older
+  /// build never wrote an owner marker.
+  Future<void> ensureUserScope(
+    String userId, {
+    bool discardDemoData = false,
+  }) async {
+    final owner = getMeta(ownerMetaKey);
+    if (owner == userId) return;
+
+    final hadDemoData =
+        getMeta('demo_user') != null || getMeta('seed_version') != null;
+    if (owner != null || (discardDemoData && hadDemoData)) {
+      await clearUserData();
+    }
+    await setMeta(ownerMetaKey, userId);
   }
 
   Future<void> markSynced(String table, String id) async {

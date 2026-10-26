@@ -22,7 +22,7 @@ port = 54324
 
 [storage]
 enabled = true
-file_size_limit = "10MiB"
+file_size_limit = "50MiB"
 
 [auth]
 enabled = true
@@ -40,7 +40,7 @@ refresh_token_reuse_interval = 10
 [auth.email]
 enable_signup = true
 double_confirm_changes = true
-enable_confirmations = false
+enable_confirmations = true
 
 [functions.investigation-report]
 verify_jwt = true

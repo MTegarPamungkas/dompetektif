@@ -23,6 +23,7 @@ class AuthRepositoryImpl implements AuthRepository {
       StreamController<AppUser?>.broadcast();
 
   AppUser? _demoUser;
+  Future<void> _scopeChain = Future<void>.value();
 
   @override
   AppUser? get currentUser {
@@ -53,18 +54,27 @@ class AuthRepositoryImpl implements AuthRepository {
           );
         }
       }
-      yield _demoUser;
+      final demoUser = _demoUser;
+      if (demoUser != null) {
+        await _ensureScope(demoUser.id);
+      }
+      yield demoUser;
       yield* _demoController.stream;
       return;
     }
 
     final client = _client!;
-    yield client.auth.currentUser == null
-        ? null
-        : _mapUser(client.auth.currentUser!);
-    yield* client.auth.onAuthStateChange.map((state) {
+    final current = client.auth.currentUser;
+    if (current != null) {
+      await _ensureScope(current.id, discardDemoData: true);
+    }
+    yield current == null ? null : _mapUser(current);
+    yield* client.auth.onAuthStateChange.asyncMap((state) async {
       final user = state.session?.user;
-      return user == null ? null : _mapUser(user);
+      if (user == null) return null;
+      final mapped = _mapUser(user);
+      await _ensureScope(mapped.id, discardDemoData: true);
+      return mapped;
     });
   }
 
@@ -80,6 +90,7 @@ class AuthRepositoryImpl implements AuthRepository {
     );
     final user = response.user;
     if (user == null) throw StateError('Login tidak mengembalikan sesi.');
+    await _ensureScope(user.id, discardDemoData: true);
     return _mapUser(user);
   }
 
@@ -99,6 +110,9 @@ class AuthRepositoryImpl implements AuthRepository {
     if (user == null) {
       throw StateError('Registrasi berhasil, tetapi sesi belum aktif.');
     }
+    if (client.auth.currentUser != null) {
+      await _ensureScope(user.id, discardDemoData: true);
+    }
     return _mapUser(user);
   }
 
@@ -115,6 +129,7 @@ class AuthRepositoryImpl implements AuthRepository {
         'Login Google dibuka di browser. Setelah selesai, aplikasi akan melanjutkan otomatis.',
       );
     }
+    await _ensureScope(user.id, discardDemoData: true);
     return _mapUser(user);
   }
 
@@ -123,6 +138,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (!isDemo) {
       throw UnsupportedError('Mode demo tidak tersedia saat Supabase aktif.');
     }
+    await _ensureScope(AppConfig.demoUserId);
     await _seeder.seedIfNeeded();
     final user = AppUser(
       id: AppConfig.demoUserId,
@@ -152,6 +168,18 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     await _client!.auth.signOut();
     await _store.clearUserData();
+  }
+
+  /// Serialises scope changes so a sign-in event and the auth stream cannot
+  /// clear the same local store at the same time.
+  Future<void> _ensureScope(String userId, {bool discardDemoData = false}) {
+    _scopeChain = _scopeChain
+        .catchError((Object _) {})
+        .then(
+          (_) =>
+              _store.ensureUserScope(userId, discardDemoData: discardDemoData),
+        );
+    return _scopeChain;
   }
 
   SupabaseClient _requireClient() {
