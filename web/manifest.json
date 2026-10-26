@@ -37,9 +37,9 @@
     ],
     "shortcuts": [
         {
-            "name": "Kumpulin Barang Bukti",
-            "short_name": "Barang Bukti",
-            "description": "Pindai struk baru",
+            "name": "Scan struk",
+            "short_name": "Scan struk",
+            "description": "Foto struk baru dan biarkan detektif membacanya",
             "url": "./#/receipt/scan",
             "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192"}]
         }
